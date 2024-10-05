@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { cn } from "@/utils/cn";
 import Link from "next/link";
-import React from "react";
+import TextPill from "./text-pill";
 
 type Props = {
   title: string;
@@ -68,21 +67,3 @@ export default function ProductCard(props: Props) {
     </div>
   );
 }
-
-type TextPillProps = {
-  children: string;
-  className?: string;
-};
-
-const TextPill = ({ children, className }: TextPillProps) => {
-  return (
-    <p
-      className={cn(
-        "font-semibold py-0.5 md:py-1 px-2 md:px-3 rounded-full uppercase text-white text-[0.625rem] md:text-xs",
-        className
-      )}
-    >
-      {children}
-    </p>
-  );
-};
