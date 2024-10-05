@@ -14,13 +14,12 @@ function NavItem(props: NavItemProps) {
   const path = usePathname();
   let isActive = props.href != "/" && path.startsWith(props.href);
 
-  if (path == "/" && props.href == "/") 
-    isActive = true;
+  if (path == "/" && props.href == "/") isActive = true;
 
   return (
     <Link
       className={cn(
-        "text-lg py-1 uppercase border-b-2 border-transparent hover:border-b-gray-700 transition-colors duration-200",
+        "py-1 uppercase border-b-2 border-transparent hover:border-b-gray-700 transition-colors duration-200",
         isActive && "text-rose-400 border-b-2 !border-b-rose-400"
       )}
       href={props.href}

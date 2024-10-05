@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lato, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import NavHeader from "@/components/nav-header";
+import Footer from "@/components/footer";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
       >
         <NavHeader />
         {children}
+        <Footer />
       </body>
     </html>
   );
