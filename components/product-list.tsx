@@ -1,32 +1,34 @@
+"use client";
 import React from "react";
 import ProductCard from "./product-card";
 
-function ProductList() {
+import { motion } from "framer-motion";
+import { Product } from "@/types/Product";
+
+const container = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.2,
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+function ProductList({ products }: { products: Product[] }) {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8">
-      <ProductCard
-        title="Sac à Dos Urbain"
-        image="https://plus.unsplash.com/premium_photo-1680373109883-47a3617e9acd?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        price={299}
-        isNew
-        isInWishlist={false}
-      />
-      <ProductCard
-        title="Montre Classique en Cuir"
-        image="https://images.unsplash.com/photo-1560079616-a788c0a654e7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        price={299}
-        undiscountedPrice={350}
-        isNew
-        isInWishlist={false}
-      />
-      <ProductCard
-        title="Sac à Dos Urbain"
-        image="https://images.unsplash.com/photo-1611312449412-6cefac5dc3e4?q=80&w=1892&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        price={299}
-        isNew
-        isInWishlist={false}
-      />
-    </div>
+    <motion.div
+      variants={container}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8"
+    >
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </motion.div>
   );
 }
 

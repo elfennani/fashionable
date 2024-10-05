@@ -6,6 +6,20 @@ import FeaturedSection from "@/components/featured-section";
 import ProductList from "@/components/product-list";
 import SectionTitle from "@/components/section-title";
 import Testimonial from "@/components/testimonial";
+import products from "@/assets/products.json";
+import { Product } from "@/types/Product";
+
+const productsMapped = products.map(
+  (product): Product => ({
+    id: product.id,
+    image: product.image,
+    new: product.is_new,
+    price: product.price,
+    basePrice: product.undiscounted_price,
+    title: product.name,
+    wishlisted: false,
+  })
+);
 
 export default function Home() {
   return (
@@ -33,14 +47,14 @@ export default function Home() {
       </Container>
       <Container className="py-8 max-md:px-4 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nos Produits Populaires</SectionTitle>
-        <ProductList />
+        <ProductList products={productsMapped.slice(0, 3)} />
         <Button className="self-center" secondary>
           Voir plus
         </Button>
       </Container>
       <Container className="py-8 max-md:px-4 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nouveautés</SectionTitle>
-        <ProductList />
+        <ProductList products={productsMapped.slice(3, 6)} />
         <Button className="self-center" secondary>
           Voir plus
         </Button>
