@@ -1,5 +1,4 @@
-import React, { useCallback, useState } from "react";
-import Logo from "./LOGO.svg";
+import Logo from "@/assets/LOGO.svg";
 import Image from "next/image";
 import { Route } from "@/types/Route";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Lato, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import NavHeader from "@/components/NavHeader";
+import NavHeader from "@/components/nav-header";
 
 const lato = Lato({
   subsets: ["latin"],

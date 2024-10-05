@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 
-interface Props {}
+type Props = object;
 
 const BoutiquePage: NextPage<Props> = ({}) => {
   return <div></div>;

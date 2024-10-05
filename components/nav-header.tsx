@@ -1,12 +1,12 @@
 "use client";
-import Logo from "./LOGO.svg";
+import Logo from "@/assets/LOGO.svg";
 import React, { useState } from "react";
 import Image from "next/image";
-import NavItem from "@/components/NavItem";
+import NavItem from "@/components/nav-item";
 import Link from "next/link";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/sidebar";
 import { Route } from "@/types/Route";
-import CartSidebar from "./CartSidebar";
+import CartSidebar from "./cart-sidebar";
 
 const routes: Route[] = [
   { name: "Acceuil", path: "/" },

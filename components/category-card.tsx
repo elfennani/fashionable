@@ -1,15 +1,19 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import React from "react";
 
 type Props = {
   title: string;
   image: string;
-  href: string
+  href: string;
 };
 
 export default function CategoryCard({ image, title, href }: Props) {
   return (
-    <Link href={href} className="flex md:flex-col gap-4 items-center font-light text-lg md:text-2xl md:text-center">
+    <Link
+      href={href}
+      className="flex hover:scale-105 transition-transform md:flex-col gap-4 items-center font-light text-lg md:text-2xl md:text-center"
+    >
       <img
         src={image}
         alt={title}
