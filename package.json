@@ -15,7 +15,8 @@
     "next": "14.2.14",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-merge": "^2.5.3"
+    "tailwind-merge": "^2.5.3",
+    "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {
     "@iconify-json/heroicons": "^1.2.0",

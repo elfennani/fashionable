@@ -55,6 +55,9 @@ const config: Config = {
       }),
     },
   },
-  plugins: [addIconSelectors(["teenyicons", "heroicons-outline"])],
+  plugins: [
+    addIconSelectors(["teenyicons", "heroicons-outline"]),
+    require("tailwind-scrollbar-hide"),
+  ],
 };
 export default config;
