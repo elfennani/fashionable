@@ -49,7 +49,7 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
   return (
     <div>
       <div className="md:bg-neutral-100">
-        <Container className="py-4 md:py-6 flex gap-4 text-neutral-400">
+        <Container className="!px-8 py-4 md:py-6 flex flex-wrap gap-4 text-neutral-400">
           <Link
             href="/boutique"
             className="hover:text-neutral-700 transition-colors"
@@ -67,13 +67,13 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
           <span className="text-neutral-700">{product.title}</span>
         </Container>
       </div>
-      <div className="border-b border-b-neutral-200">
-        <Container className="grid grid-cols-2 gap-8 py-16">
-          <div className="flex gap-4 items-center">
-            <div className="flex flex-col gap-4">
+      <div className="md:border-b border-b-neutral-200">
+        <Container className="grid grid-cols-1 md:grid-cols-2 items-start gap-8 py-4 md:py-16">
+          <div className="flex max-lg:flex-col-reverse gap-4 lg:items-center">
+            <div className="flex lg:flex-col gap-4">
               {product.images.map((image, i) => (
                 <img
-                  className="w-20 aspect-[4/5] object-cover bg-neutral-100"
+                  className="h-20 overflow-hidden lg:w-20 aspect-[4/5] object-cover bg-neutral-100"
                   src={image}
                   alt={`${product.title} ${i}`}
                   key={image}
@@ -106,9 +106,9 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
               </div>
             </div>
           </div>
-          <div className="py-8 flex flex-col gap-6">
+          <div className="md:py-8 flex flex-col gap-6">
             <div className="flex flex-col gap-4">
-              <h1 className="font-display text-5xl text-balance">
+              <h1 className="font-display text-4xl md:text-5xl text-balance">
                 {product.title}
               </h1>
               <p className="text-neutral-400">
@@ -137,8 +137,8 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
               </div>
               <CounterInput max={5} />
             </div>
-            <div className="flex gap-10">
-              <div className="self-end">
+            <div className="flex max-lg:flex-col gap-6 lg:gap-10">
+              <div className="lg:self-end">
                 {product.basePrice && (
                   <p className="font-black text-neutral-300 line-through">
                     {product.basePrice} MAD
@@ -153,19 +153,19 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
                 Ajouter au panier
               </Button>
             </div>
-            <button className="flex items-center gap-4 uppercase hover:underline py-4 underline-offset-4">
+            <button className="flex items-center max-md:self-center gap-4 uppercase hover:underline py-4 underline-offset-4">
               <span className="iconify teenyicons--heart-outline size-6" />
               Ajouter au wishlist
             </button>
-            <div className="flex gap-10">
-              <Link href="#" className="p-2 -m-2">
-                <span className="iconify teenyicons--whatsapp-outline size-6" />
+            <div className="flex gap-10 max-md:pb-4 max-md:justify-center">
+              <Link href="#" className="p-2 -m-2 group">
+                <span className="iconify teenyicons--whatsapp-outline group-hover:teenyicons--whatsapp-solid size-6" />
               </Link>
-              <Link href="#" className="p-2 -m-2">
-                <span className="iconify teenyicons--instagram-outline size-6" />
+              <Link href="#" className="p-2 -m-2 group">
+                <span className="iconify teenyicons--instagram-outline group-hover:teenyicons--instagram-solid size-6" />
               </Link>
-              <Link href="#" className="p-2 -m-2">
-                <span className="iconify teenyicons--facebook-outline size-6" />
+              <Link href="#" className="p-2 -m-2 group">
+                <span className="iconify teenyicons--facebook-outline group-hover:teenyicons--facebook-solid size-6" />
               </Link>
             </div>
           </div>
