@@ -19,7 +19,7 @@ export default function NavHeader() {
   const [cartOpen, setCartOpen] = useState(false);
 
   return (
-    <header className="w-full">
+    <header className="w-full transition-colors group-has-[.blend]:bg-zinc-100">
       <div className="flex relative max-w-[1264px] mx-auto px-8 items-center py-6 md:py-10">
         {cartOpen && <CartSidebar onClose={() => setCartOpen(false)} />}
         <nav className="md:flex-1">

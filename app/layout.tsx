@@ -29,9 +29,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${playfairDisplay.variable} ${lato.className} antialiased text-gray-700`}
+        className={`${playfairDisplay.variable} ${lato.className} antialiased text-gray-700 group scroll-smooth`}
       >
         <NavHeader />
         {children}
