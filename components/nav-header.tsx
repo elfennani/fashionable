@@ -29,9 +29,11 @@ export default function NavHeader() {
           >
             <span className="iconify heroicons-outline--menu-alt-4 size-6" />
           </button>
-          {sidebarOpen && (
-            <Sidebar routes={routes} onClose={() => setSidebarOpen(false)} />
-          )}
+          <Sidebar
+            routes={routes}
+            visible={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+          />
           <ul className="flex gap-8 max-lg:hidden">
             {routes.map((route) => (
               <li key={route.name}>
