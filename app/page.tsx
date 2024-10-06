@@ -9,7 +9,7 @@ import Testimonial from "@/components/testimonial";
 import products from "@/assets/products.json";
 import { Product } from "@/types/Product";
 
-const productsMapped = products.map(
+export const productsMapped = products.map(
   (product): Product => ({
     id: product.id,
     image: product.image,

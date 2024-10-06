@@ -51,7 +51,7 @@ const Sidebar = ({ routes, onClose, visible }: Props) => {
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: "-100%", opacity: 0 }}
             className={cn(
-              "max-w-80 w-[75vw]  z-20 h-dvh fixed bg-white top-0 left-0 flex flex-col gap-8 p-8",
+              "max-w-80 w-[75vw] z-50 h-dvh fixed bg-white top-0 left-0 flex flex-col gap-8 p-8",
               "after:block after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:bg-white after:-translate-x-full"
               // closing && "animate-slide-out-left"
             )}

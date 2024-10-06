@@ -8,6 +8,10 @@ import TextPill from "@/components/text-pill";
 import CounterInput from "@/components/counter-input";
 import Button from "@/components/button";
 import ProductInfo from "@/components/product-info";
+import SectionTitle from "@/components/section-title";
+import { productsMapped } from "@/app/page";
+import ProductList from "@/components/product-list";
+import ProductImageSlideshow from "@/components/product-image-slideshow";
 
 interface Props {
   params: { slug: string };
@@ -49,7 +53,7 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
   return (
     <div>
       <div className="md:bg-neutral-100">
-        <Container className="!px-8 py-4 md:py-6 flex flex-wrap gap-4 text-neutral-400">
+        <Container className="!px-8 py-2 md:py-6 flex flex-wrap gap-2 md:gap-4 text-neutral-400 text-sm md:text-base">
           <Link
             href="/boutique"
             className="hover:text-neutral-700 transition-colors"
@@ -67,45 +71,9 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
           <span className="text-neutral-700">{product.title}</span>
         </Container>
       </div>
-      <div className="md:border-b border-b-neutral-200">
+      <div className="md:border-b md:border-b-neutral-200">
         <Container className="grid grid-cols-1 md:grid-cols-2 items-start gap-8 py-4 md:py-16">
-          <div className="flex max-lg:flex-col-reverse gap-4 lg:items-center">
-            <div className="flex lg:flex-col gap-4">
-              {product.images.map((image, i) => (
-                <img
-                  className="h-20 overflow-hidden lg:w-20 aspect-[4/5] object-cover bg-neutral-100"
-                  src={image}
-                  alt={`${product.title} ${i}`}
-                  key={image}
-                />
-              ))}
-            </div>
-            <div className="aspect-[4/5] relative w-full">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-0 left-0 w-full overflow-hidden h-full flex flex-col justify-between">
-                <div className="p-4 md:p-6 flex flex-col gap-1 md:gap-2 items-end">
-                  {product.new && (
-                    <TextPill className="bg-green-700">Nouveau</TextPill>
-                  )}
-                  {!!product.basePrice && (
-                    <TextPill className="bg-rose-400">Promo</TextPill>
-                  )}
-                </div>
-                <div className="flex gap-6 items-start p-8">
-                  <button className="bg-white transition-colors p-3 text-neutral-700  flex items-center justify-center rounded-full">
-                    <span className="iconify teenyicons--left-outline size-6 block" />
-                  </button>
-                  <button className="bg-white transition-colors p-3 text-neutral-700  flex items-center justify-center rounded-full">
-                    <span className="iconify teenyicons--right-outline size-6 block" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ProductImageSlideshow product={product} />
           <div className="md:py-8 flex flex-col gap-6">
             <div className="flex flex-col gap-4">
               <h1 className="font-display text-4xl md:text-5xl text-balance">
@@ -173,6 +141,11 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
       </div>
 
       <ProductInfo product={product} />
+
+      <Container className="py-8 md:py-16 flex flex-col gap-8 md:gap-16">
+        <SectionTitle>Produits similaires</SectionTitle>
+        <ProductList products={productsMapped.slice(0, 3)} />
+      </Container>
     </div>
   );
 };

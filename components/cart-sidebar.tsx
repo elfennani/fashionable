@@ -21,7 +21,7 @@ export default function CartSidebar({ onClose }: Props) {
 
       <div
         className={cn(
-          "max-lg:animate-slide-in-right lg:shadow-lg lg:animate-fade-in max-lg:fixed lg:absolute max-lg:flex max-lg:flex-col z-20 max-lg:max-w-80 max-lg:w-[75vw] lg:w-[512px] bg-white lg:border lg:border-neutral-200 max-lg:top-0 right-0 bottom-0 lg:right-8 lg:bottom-0 lg:translate-y-full",
+          "max-lg:animate-slide-in-right lg:shadow-lg lg:animate-fade-in max-lg:fixed lg:absolute max-lg:flex max-lg:flex-col z-50 max-lg:max-w-80 max-lg:w-[75vw] lg:w-[512px] bg-white lg:border lg:border-neutral-200 max-lg:top-0 right-0 bottom-0 lg:right-8 lg:bottom-0 lg:translate-y-full",
           closing && "max-lg:animate-slide-out-right lg:!animate-fade-out"
         )}
       >

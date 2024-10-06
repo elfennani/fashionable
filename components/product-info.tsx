@@ -37,7 +37,7 @@ const ProductInfo = ({ product }: Props) => {
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   return (
-    <div className="border-b border-b-neutral-200">
+    <div className="md:border-b border-b-neutral-200">
       <Container className="py-8 lg:py-16 flex flex-col gap-8 md:gap-16">
         <div className="flex -mx-4 px-4 overflow-x-auto scrollbar-hide items-center md:justify-center gap-8 md:gap-16">
           {tabs.map((tab) => (
