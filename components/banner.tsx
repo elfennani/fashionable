@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 
 type Props = object;
@@ -56,8 +56,14 @@ const variants: Variants = {
 
 export default function Banner({}: Props) {
   const [[page, direction], setIndex] = useState([0, 0]);
+  const autoPagination = useRef<NodeJS.Timeout | null | false>(null);
 
-  const increment = () => {
+  const increment = (shouldStop = true) => {
+    if (shouldStop && autoPagination.current) {
+      clearInterval(autoPagination.current);
+      autoPagination.current = false;
+    }
+
     setIndex((index) => {
       if (index[0] == banners.length - 1) {
         return [0, 1];
@@ -68,6 +74,10 @@ export default function Banner({}: Props) {
   };
 
   const decrement = () => {
+    if (autoPagination.current) {
+      clearInterval(autoPagination.current!);
+      autoPagination.current = false;
+    }
     setIndex((index) => {
       if (index[0] == 0) {
         return [banners.length - 1, -1];
@@ -76,6 +86,16 @@ export default function Banner({}: Props) {
       return [index[0] - 1, -1];
     });
   };
+
+  useEffect(() => {
+    if (autoPagination.current == false) return;
+    autoPagination.current = setInterval(() => increment(false), 3000);
+    return () => {
+      if (autoPagination.current) {
+        clearInterval(autoPagination.current!);
+      }
+    };
+  }, []);
 
   return (
     <div className="w-screen max-h-[80svh] aspect-[9/16] xl:aspect-[21/9] relative overflow-hidden">
@@ -117,7 +137,7 @@ export default function Banner({}: Props) {
               <span className="iconify teenyicons--left-outline size-6 sm:size-8 block" />
             </button>
             <button
-              onClick={increment}
+              onClick={() => increment(true)}
               className="bg-white bg-opacity-25 hover:bg-opacity-40 transition-colors p-3 sm:p-4 text-white  flex items-center justify-center rounded-full"
             >
               <span className="iconify teenyicons--right-outline size-6 sm:size-8 block" />
