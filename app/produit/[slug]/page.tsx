@@ -4,7 +4,6 @@ import { NextPage } from "next";
 import Link from "next/link";
 import products from "@/assets/products.json";
 import { ProductDetails } from "@/types/ProductDetails";
-import TextPill from "@/components/text-pill";
 import CounterInput from "@/components/counter-input";
 import Button from "@/components/button";
 import ProductInfo from "@/components/product-info";

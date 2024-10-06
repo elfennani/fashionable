@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { ProductDetails } from "@/types/ProductDetails";
 import React, { useState } from "react";
@@ -22,7 +23,7 @@ const ProductImageSlideshow = ({ product }: Props) => {
     <div className="flex max-lg:flex-col-reverse gap-4 lg:items-center">
       <div className="flex lg:flex-col gap-4">
         {product.images.map((image, i) => (
-          <button onClick={() => setIndex(i)}>
+          <button key={image} onClick={() => setIndex(i)}>
             <img
               className={cn(
                 "h-20 overflow-hidden lg:w-20 opacity-50 aspect-[4/5] transition-opacity object-cover bg-neutral-100",
@@ -30,7 +31,6 @@ const ProductImageSlideshow = ({ product }: Props) => {
               )}
               src={image}
               alt={`${product.title} ${i}`}
-              key={image}
             />
           </button>
         ))}
