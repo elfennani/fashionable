@@ -145,15 +145,16 @@ export default function Banner({}: Props) {
           </div>
         </div>
 
-        <button className="bg-white px-6 md:px-16 py-6 text-rose-400 flex tracking-wider uppercase items-center justify-center gap-4 sm:gap-6 transition-colors hover:bg-rose-50">
+        <button className="bg-white relative after:block after:absolute after:bg-rose-100 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:w-full after:transition-transform after:top-0 after:left-0 after:bottom-0 px-6 md:px-16 py-6 text-rose-400 flex tracking-wider uppercase items-center justify-center gap-4 sm:gap-6 transition-colors">
           <motion.span
             key={page}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
+            className="z-20"
           >
             {banners[page].button_text}
           </motion.span>
-          <span className="iconify teenyicons--top-right-outline size-5" />
+          <span className="iconify teenyicons--top-right-outline size-5 z-20" />
         </button>
       </div>
     </div>
