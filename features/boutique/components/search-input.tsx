@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import useSearchParams from "@/hooks/useSearchParams";
+import useSearchParams from "@/features/boutique/hooks/useSearchParams";
 import React, { useEffect, useState } from "react";
 
 type Props = object;

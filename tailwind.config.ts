@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
 import { addIconSelectors } from "@iconify/tailwind";
 
@@ -5,6 +6,7 @@ const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./features/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
@@ -27,7 +29,7 @@ const config: Config = {
         "slide-out-right": "slideOutRight 200ms ease-in-out",
       },
 
-      keyframes: (theme) => ({
+      keyframes: () => ({
         fadeIn: {
           "0%": { opacity: "0%" },
           "100%": { opacity: "100%" },

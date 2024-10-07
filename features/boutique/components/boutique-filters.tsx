@@ -1,13 +1,9 @@
 "use client";
 import products from "@/assets/products.json";
 import { cn } from "@/utils/cn";
-import useSearchParams from "@/hooks/useSearchParams";
+import useSearchParams from "@/features/boutique/hooks/useSearchParams";
 import RangeInput from "./RangeInput";
-
-type Props = {
-  min: number;
-  max: number;
-};
+import useFilteredProducts from "../hooks/useFilteredProducts";
 
 const colors = [
   "#F87171",
@@ -27,9 +23,9 @@ const parseNumberParam = (value: string | null, defaultNumber: number) => {
   return number;
 };
 
-const BoutiqueFilters = ({ max: maxPrice, min: minPrice }: Props) => {
+const BoutiqueFilters = () => {
   const [params, setParam] = useSearchParams();
-  // const [values, setValues] = useState<[number, number]>([15, 75]);
+  const { minPrice, maxPrice } = useFilteredProducts();
 
   const activeColor = params.get("color");
   const min = parseNumberParam(params.get("min"), 0);
