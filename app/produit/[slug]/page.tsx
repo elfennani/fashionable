@@ -9,8 +9,8 @@ import Button from "@/components/button";
 import ProductInfo from "@/components/product-info";
 import SectionTitle from "@/components/section-title";
 import { productsMapped } from "@/app/page";
-import ProductList from "@/components/product-list";
 import ProductImageSlideshow from "@/components/product-image-slideshow";
+import AnimatedProductList from "@/components/animated-product-list";
 
 interface Props {
   params: { slug: string };
@@ -143,7 +143,7 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
 
       <Container className="py-8 md:py-16 flex flex-col gap-8 md:gap-16">
         <SectionTitle>Produits similaires</SectionTitle>
-        <ProductList products={productsMapped.slice(0, 3)} />
+        <AnimatedProductList products={productsMapped.slice(0, 3)} />
       </Container>
     </div>
   );

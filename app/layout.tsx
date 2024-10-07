@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${playfairDisplay.variable} ${lato.className} antialiased text-gray-700 group scroll-smooth`}
+        className={`${playfairDisplay.variable} ${lato.className} antialiased text-gray-700 group/body scroll-smooth`}
       >
         <NavHeader />
         {children}

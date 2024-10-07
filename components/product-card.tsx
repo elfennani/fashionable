@@ -1,25 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-"use client";
 import Link from "next/link";
 import TextPill from "./text-pill";
-import { motion } from "framer-motion";
 import { Product } from "@/types/Product";
+import { memo } from "react";
 
 type Props = {
   product: Product;
 };
 
-const item = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-  },
-};
-
-export default function ProductCard({ product }: Props) {
+function ProductCard({ product }: Props) {
   return (
-    <motion.div variants={item} className="group">
+    <div className="group">
       <div className="aspect-[4/5] relative overflow-hidden">
         <Link href={`/produit/${product.id}`}>
           <img
@@ -70,6 +61,8 @@ export default function ProductCard({ product }: Props) {
           )}
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 }
+
+export default memo(ProductCard);

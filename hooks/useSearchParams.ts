@@ -11,6 +11,7 @@ const useSearchParams = () => {
   const { replace } = useRouter();
 
   const set = (key: string, value: string) => {
+    params.set("page", "0");
     if (value) {
       params.set(key, value);
     } else {

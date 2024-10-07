@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { cn } from "@/utils/cn";
 import * as React from "react";
@@ -8,20 +9,34 @@ type Props = {
   steps?: number;
   min?: number;
   max?: number;
+  values: readonly [number, number];
+  onChange: (range: [number, number]) => void;
 };
 
-const RangeInput: React.FC<Props> = ({ max = 100, min = 0, steps = 1 }) => {
-  const [values, setValues] = React.useState([25, 75]);
+const RangeInput: React.FC<Props> = ({
+  max = 100,
+  min = 0,
+  steps = 1,
+  onChange,
+  values: newValues,
+}) => {
+  const [values, setValues] = React.useState([min, max]);
+
+  React.useEffect(() => {
+    setValues(values);
+  }, [newValues]);
+
   return (
     <div className="flex flex-wrap flex-col">
       <Range
-        values={values}
+        values={values as [number, number]}
         step={steps}
         min={min}
         max={max}
         rtl={false}
-        onChange={(values) => {
-          setValues(values);
+        onChange={setValues}
+        onFinalChange={(values) => {
+          onChange(values as [number, number]);
         }}
         renderTrack={({ props, children }) => (
           <div
@@ -39,7 +54,7 @@ const RangeInput: React.FC<Props> = ({ max = 100, min = 0, steps = 1 }) => {
               className="h-0.5 w-full rounded self-center"
               style={{
                 background: getTrackBackground({
-                  values,
+                  values: values as [number, number],
                   colors: [
                     colors.neutral[200],
                     colors.rose[400],

@@ -4,10 +4,45 @@ import { cn } from "@/utils/cn";
 import useSearchParams from "@/hooks/useSearchParams";
 import RangeInput from "./RangeInput";
 
-type Props = object;
+type Props = {
+  min: number;
+  max: number;
+};
 
-const BoutiqueFilters = ({}: Props) => {
+const colors = [
+  "#F87171",
+  "#FB923C",
+  "#FACC15",
+  "#A3E635",
+  "#38BDF8",
+  "#A78BFA",
+  "#4ADE80",
+  "#E879F9",
+];
+
+const parseNumberParam = (value: string | null, defaultNumber: number) => {
+  const number = Number(value);
+  if (Number.isNaN(number) || value == undefined) return defaultNumber;
+
+  return number;
+};
+
+const BoutiqueFilters = ({ max: maxPrice, min: minPrice }: Props) => {
   const [params, setParam] = useSearchParams();
+  // const [values, setValues] = useState<[number, number]>([15, 75]);
+
+  const activeColor = params.get("color");
+  const min = parseNumberParam(params.get("min"), 0);
+  const max = parseNumberParam(params.get("max"), 100);
+  const values = [min, max] as const;
+
+  const setValues = ([min, max]: [number, number]) => {
+    setParam("min", min.toString());
+    setParam("max", max.toString());
+  };
+
+  const setActiveColor = (color: string | null) =>
+    setParam("color", color ?? "all");
 
   const categories = products
     .map((product) => product.category)
@@ -53,10 +88,49 @@ const BoutiqueFilters = ({}: Props) => {
       <h2 className="text-lg font-semibold capitalize">filtrer par</h2>
       <div className="flex flex-col gap-4">
         <h3 className="font-semibold opacity-80">Prix</h3>
-        <RangeInput />
+        <RangeInput
+          values={values}
+          onChange={setValues}
+          min={minPrice}
+          max={maxPrice}
+        />
       </div>
-      <div>
-        <h3 className="font-semibold opacity-80">Colour</h3>
+      <div className="flex flex-col gap-4">
+        <div className="flex justify-between">
+          <h3 className="font-semibold opacity-80">Colour</h3>
+          {activeColor && activeColor != "all" && (
+            <button
+              className="text-rose-400"
+              onClick={() => setActiveColor(null)}
+            >
+              annuler
+            </button>
+          )}
+        </div>
+        <div className="flex flex-wrap gap-x-4 gap-y-2">
+          {colors.map((color) => (
+            <button
+              className={cn(
+                "size-8 rounded-full opacity-50 flex items-center justify-center transition-all",
+                color == activeColor && "opacity-100"
+              )}
+              style={{
+                backgroundColor: color,
+                // the hex number at end (66) means 40% alpha
+                boxShadow:
+                  activeColor == color ? `0 4px 6.3px ${color}66` : undefined,
+              }}
+              onClick={() =>
+                setActiveColor(activeColor == color ? null : color)
+              }
+              key={color}
+            >
+              {activeColor == color && (
+                <span className="iconify heroicons-outline--check bg-white size-6" />
+              )}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
