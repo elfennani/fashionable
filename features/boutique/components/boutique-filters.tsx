@@ -3,7 +3,6 @@ import products from "@/assets/products.json";
 import { cn } from "@/utils/cn";
 import useSearchParams from "@/features/boutique/hooks/useSearchParams";
 import RangeInput from "./RangeInput";
-import useFilteredProducts from "../hooks/useFilteredProducts";
 
 const colors = [
   "#F87171",
@@ -23,9 +22,8 @@ const parseNumberParam = (value: string | null, defaultNumber: number) => {
   return number;
 };
 
-const BoutiqueFilters = () => {
+const BoutiqueFilters = (props: { className?: string }) => {
   const [params, setParam] = useSearchParams();
-  const { minPrice, maxPrice } = useFilteredProducts();
 
   const activeColor = params.get("color");
   const min = parseNumberParam(params.get("min"), 0);
@@ -52,7 +50,7 @@ const BoutiqueFilters = () => {
     );
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className={cn("flex flex-col gap-8", props.className)}>
       <h2 className="text-lg font-semibold">Catégories</h2>
       <ul className="flex flex-col gap-1">
         <button
@@ -84,12 +82,7 @@ const BoutiqueFilters = () => {
       <h2 className="text-lg font-semibold capitalize">filtrer par</h2>
       <div className="flex flex-col gap-4">
         <h3 className="font-semibold opacity-80">Prix</h3>
-        <RangeInput
-          values={values}
-          onChange={setValues}
-          min={minPrice}
-          max={maxPrice}
-        />
+        <RangeInput values={values} onChange={setValues} />
       </div>
       <div className="flex flex-col gap-4">
         <div className="flex justify-between">

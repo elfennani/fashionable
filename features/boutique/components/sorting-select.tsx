@@ -14,7 +14,7 @@ const SortingSelect = () => {
   return (
     <select
       id="sorting"
-      className="py-4 px-6 bg-transparent"
+      className="px-2 py-2 max-sm:flex-1 sm:py-4 sm:px-6 bg-transparent max-lg:flex-1"
       onChange={(e) => setParams("sort", e.target.value)}
     >
       {Object.keys(sorts).map((sort) => (

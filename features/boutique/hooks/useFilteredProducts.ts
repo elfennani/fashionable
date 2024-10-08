@@ -21,22 +21,22 @@ const useFilteredProducts = () => {
     );
   });
 
-  const rangeFilter = categoryFilter.filter((product) => {
-    const min = Number(filters.min);
-    const max = Number(filters.max);
+  // const rangeFilter = categoryFilter.filter((product) => {
+  //   const min = Number(filters.min);
+  //   const max = Number(filters.max);
 
-    if (filters.min != null && filters.max != null) {
-      return product.price >= min && product.price <= max;
-    } else if (filters.min != null) {
-      return product.price >= min;
-    } else if (filters.max != null) {
-      return product.price <= max;
-    }
+  //   if (filters.min != null && filters.max != null) {
+  //     return product.price >= min && product.price <= max;
+  //   } else if (filters.min != null) {
+  //     return product.price >= min;
+  //   } else if (filters.max != null) {
+  //     return product.price <= max;
+  //   }
 
-    return true;
-  });
+  //   return true;
+  // });
 
-  const sorting = rangeFilter.sort((a, b) => {
+  const sorting = categoryFilter.sort((a, b) => {
     if (filters.sorting === "popular") {
       return 0;
     } else if (filters.sorting === "increasing") {
@@ -57,7 +57,7 @@ const useFilteredProducts = () => {
     maxPrice
   );
 
-  const maxPages = Math.ceil(rangeFilter.length / 6);
+  const maxPages = Math.ceil(categoryFilter.length / 6);
 
   return { products: sorting, minPrice, maxPages, maxPrice };
 };

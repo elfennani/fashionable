@@ -7,6 +7,7 @@ import SearchInput from "@/features/boutique/components/search-input";
 import { Suspense } from "react";
 import SortingSelect from "@/features/boutique/components/sorting-select";
 import FilteredProductsList from "@/features/boutique/components/filtered-products-list";
+import FiltersButton from "@/features/boutique/components/filters-button";
 
 type Props = object;
 
@@ -19,15 +20,17 @@ const Boutique: NextPage<Props> = ({}) => {
       />
 
       <Container
-        className="grid grid-cols-[16rem_1fr] py-16 gap-16"
+        className="grid grid-cols-1 lg:grid-cols-[16rem_1fr] py-6 md:py-16 gap-6 md:gap-16"
         id="content"
       >
         <Suspense fallback={<div />}>
-          <BoutiqueFilters />
+          <div className="max-lg:hidden">
+            <BoutiqueFilters />
+          </div>
         </Suspense>
-        <div className="flex flex-col gap-12">
-          <div className="flex gap-6 items-center">
-            <div className="flex flex-1 items-center gap-6">
+        <div className="flex flex-col gap-6 lg:gap-12">
+          <div className="flex max-lg:flex-col-reverse gap-4 lg:gap-6 lg:items-center">
+            <div className="flex flex-1 xl:items-center gap-2 xl:gap-6 flex-col xl:flex-row">
               <Suspense fallback={<div />}>
                 <SearchInput />
               </Suspense>
@@ -35,13 +38,15 @@ const Boutique: NextPage<Props> = ({}) => {
                 <span className="text-rose-400">172</span> produits trouvés
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="flex flex-wrap max-lg:flex-1 gap-2 sm:gap-6 lg:gap-0 items-center">
               <label htmlFor="sorting" className="font-light">
                 Trier par:
               </label>
               <Suspense fallback={<div />}>
                 <SortingSelect />
               </Suspense>
+              <div className="h-4/5 w-px bg-neutral-200" />
+              <FiltersButton />
             </div>
           </div>
           <Suspense fallback={<div />}>

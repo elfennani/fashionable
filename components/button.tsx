@@ -6,9 +6,18 @@ type Props = {
   className?: string;
   secondary?: boolean;
   shadow?: boolean;
-};
+} & React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
 
-const Button = ({ children, className, secondary, shadow }: Props) => {
+const Button = ({
+  children,
+  className,
+  secondary,
+  shadow,
+  ...props
+}: Props) => {
   return (
     <button
       className={cn(
@@ -18,6 +27,7 @@ const Button = ({ children, className, secondary, shadow }: Props) => {
         shadow && "shadow-lg shadow-rose-100",
         className
       )}
+      {...props}
     >
       {children}
     </button>
