@@ -9,7 +9,7 @@ import { Route } from "@/types/Route";
 import CartSidebar from "./cart-sidebar";
 
 const routes: Route[] = [
-  { name: "Acceuil", path: "/" },
+  { name: "Accueil", path: "/" },
   { name: "Boutique", path: "/boutique" },
   { name: "Contact", path: "/contact" },
 ];
