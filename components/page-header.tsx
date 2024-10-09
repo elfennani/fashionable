@@ -20,18 +20,20 @@ const PageHeader = ({ subtitle, title, contentId = "content" }: Props) => {
           {subtitle}
         </p>
       </div>
-      <Link href={`#${contentId}`}>
-        <motion.span
-          animate={{ y: 20 }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "reverse",
-            duration: 0.6,
-            ease: "easeInOut",
-          }}
-          className="iconify teenyicons--arrow-down-outline size-8 md:size-10"
-        />
-      </Link>
+      {!!contentId && (
+        <Link href={`#${contentId}`}>
+          <motion.span
+            animate={{ y: 20 }}
+            transition={{
+              repeat: Infinity,
+              repeatType: "reverse",
+              duration: 0.6,
+              ease: "easeInOut",
+            }}
+            className="iconify teenyicons--arrow-down-outline size-8 md:size-10"
+          />
+        </Link>
+      )}
     </div>
   );
 };

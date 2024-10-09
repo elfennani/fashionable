@@ -74,6 +74,7 @@ const Sidebar = ({ routes, onClose, visible }: Props) => {
                   <Link
                     className="py-3 flex uppercase items-center justify-between font-bold"
                     href={route.path}
+                    onClick={onClose}
                   >
                     {route.name}
                     <span className="iconify teenyicons--arrow-right-solid size-6" />
