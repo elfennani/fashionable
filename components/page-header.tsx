@@ -2,16 +2,22 @@
 import Link from "next/link";
 import React from "react";
 import { motion } from "framer-motion";
+import { cn } from "@/utils/cn";
 
 type Props = {
   title: string;
   subtitle: string;
-  contentId?: string;
+  contentId?: string | null;
 };
 
 const PageHeader = ({ subtitle, title, contentId = "content" }: Props) => {
   return (
-    <div className="px-4 blend sm:px-8 pt-16 sm:pt-32 pb-10 sm:pb-20 gap-16 sm:gap-32 flex items-center flex-col bg-zinc-100">
+    <div
+      className={cn(
+        "px-4 blend sm:px-8 pt-16 sm:pt-32 pb-10 sm:pb-20 gap-16 sm:gap-32 flex items-center flex-col bg-zinc-100",
+        !contentId && "py-16 sm:py-32"
+      )}
+    >
       <div className="flex flex-col gap-4">
         <h1 className="text-center font-display uppercase text-3xl md:text-4xl lg:text-5xl tracking-widest font-bold">
           {title}

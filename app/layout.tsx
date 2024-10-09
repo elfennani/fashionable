@@ -3,6 +3,8 @@ import { Lato, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import NavHeader from "@/components/nav-header";
 import Footer from "@/components/footer";
+import NextTopLoader from "nextjs-toploader";
+import colors from "tailwindcss/colors";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -33,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${playfairDisplay.variable} ${lato.className} antialiased text-gray-700 group/body scroll-smooth`}
       >
+        <NextTopLoader color={colors.pink[400]} showSpinner={false} />
         <NavHeader />
         {children}
         <Footer />

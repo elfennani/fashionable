@@ -1,5 +1,6 @@
 import useSidebarClose from "@/hooks/useSidebarClose";
 import { cn } from "@/utils/cn";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 type Props = {
@@ -8,6 +9,12 @@ type Props = {
 
 export default function CartSidebar({ onClose }: Props) {
   const [closing, onExit] = useSidebarClose(() => onClose());
+  const { push } = useRouter();
+
+  const navigateToValidation = () => {
+    push("/validation");
+    onExit();
+  };
 
   return (
     <>
@@ -57,7 +64,10 @@ export default function CartSidebar({ onClose }: Props) {
             </p>
           </div>
 
-          <button className="bg-rose-400 text-rose-50 uppercase flex px-8 py-4 lg:py-5 tracking-wide shadow-lg shadow-rose-100 font-semibold gap-6 items-center justify-center hover:bg-rose-500 transition-colors duration-200">
+          <button
+            onClick={navigateToValidation}
+            className="bg-rose-400 text-rose-50 uppercase flex px-8 py-4 lg:py-5 tracking-wide shadow-lg shadow-rose-100 font-semibold gap-6 items-center justify-center hover:bg-rose-500 transition-colors duration-200"
+          >
             procéder
             <span className="iconify teenyicons--arrow-right-solid size-6" />
           </button>

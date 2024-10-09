@@ -13,7 +13,10 @@ const ContactPage: NextPage = () => {
         title="Contactez-Nous"
         subtitle="Nous sommes là pour répondre à toutes vos questions et vous aider"
       />
-      <Container className="py-4 gap-4 md:gap-8 md:py-8 lg:gap-16 lg:py-16 grid grid-cols-1 lg:grid-cols-[20rem_1fr]">
+      <Container
+        id="content"
+        className="py-4 gap-4 md:gap-8 md:py-8 lg:gap-16 lg:py-16 grid grid-cols-1 lg:grid-cols-[20rem_1fr]"
+      >
         <div className="flex flex-col max-lg:md:flex-row gap-6">
           <ContactInfo
             className="max-lg:md:flex-1"
