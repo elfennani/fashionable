@@ -55,7 +55,9 @@ export default function NavHeader() {
         </Link>
         <div className="md:flex-1 flex gap-8 justify-end">
           <span className="iconify teenyicons--search-outline size-6 max-md:hidden"></span>
-          <span className="iconify teenyicons--heart-outline size-6 relative max-md:hidden"></span>
+          <Link href="/wishlist">
+            <span className="iconify teenyicons--heart-outline size-6 relative max-md:hidden"></span>
+          </Link>
           <button className="flex" onClick={() => setCartOpen(true)}>
             <span className="iconify teenyicons--bag-outline size-6"></span>
           </button>
