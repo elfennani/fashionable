@@ -19,7 +19,7 @@ export default function CategoryCard({ image, title, href }: Props) {
         alt={title}
         className="size-16 md:size-32 rounded-full object-cover"
       />
-      <span className="max-md:flex-1">{title}</span>
+      <span className="max-md:flex-1 capitalize">{title}</span>
       <span className="iconify teenyicons--arrow-right-solid md:hidden" />
     </Link>
   );

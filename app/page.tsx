@@ -1,3 +1,4 @@
+import AnimatedProductList from "@/components/animated-product-list";
 import Banner from "@/components/banner";
 import Button from "@/components/button";
 import CategoryCard from "@/components/category-card";
@@ -5,56 +6,54 @@ import Container from "@/components/container";
 import FeaturedSection from "@/components/featured-section";
 import SectionTitle from "@/components/section-title";
 import Testimonial from "@/components/testimonial";
-import products from "@/assets/products.json";
-import { Product } from "@/types/Product";
-import AnimatedProductList from "@/components/animated-product-list";
+import supabase from "@/utils/supabase";
 
-export const productsMapped = products.map(
-  (product): Product => ({
-    id: product.id,
-    image: product.image,
-    new: product.is_new,
-    price: product.price,
-    basePrice: product.undiscounted_price,
-    title: product.name,
-    wishlisted: false,
-  })
-);
+export default async function Home() {
+  const categories = await supabase.from("category").select("*").order("name");
+  const popularProducts = await supabase
+    .from("product")
+    .select("*, images ( * ), category!inner(*)")
+    .eq("archived", false)
+    .order("created_at", { ascending: true })
+    .limit(3);
 
-export default function Home() {
+  const newProducts = await supabase
+    .from("product")
+    .select("*, images ( * ), category!inner(*)")
+    .eq("archived", false)
+    .order("created_at", { ascending: false })
+    .limit(3);
+
+  if (categories.error) return <div>{categories.error.message}</div>;
+  if (popularProducts.error) return <div>{popularProducts.error.message}</div>;
+  if (newProducts.error) return <div>{newProducts.error.message}</div>;
+
   return (
     <main>
       <Banner />
       <Container className="py-8 max-md:px-8 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nos Catégories</SectionTitle>
-        <div className="flex gap-8 md:gap-16 md:items-center md:justify-center flex-col md:flex-row">
-          <CategoryCard
-            title="Casquette"
-            image="https://plus.unsplash.com/premium_photo-1680859126205-1c593bb4f9e8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            href="#"
-          />
-          <CategoryCard
-            title="Bracelet"
-            image="https://images.unsplash.com/photo-1689367436414-7acc3fdc3e2a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            href="#"
-          />
-          <CategoryCard
-            title="Chapeau"
-            image="https://plus.unsplash.com/premium_photo-1693011410171-39d2fc309a6f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            href="#"
-          />
+        <div className="flex flex-wrap gap-8 md:gap-16 md:items-center md:justify-center flex-col md:flex-row">
+          {categories.data.map((category) => (
+            <CategoryCard
+              key={category.id}
+              title={category.name}
+              image={category.image}
+              href="#"
+            />
+          ))}
         </div>
       </Container>
       <Container className="py-8 max-md:px-4 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nos Produits Populaires</SectionTitle>
-        <AnimatedProductList products={productsMapped.slice(0, 3)} />
+        <AnimatedProductList products={popularProducts.data} />
         <Button className="self-center" secondary>
           Voir plus
         </Button>
       </Container>
       <Container className="py-8 max-md:px-4 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nouveautés</SectionTitle>
-        <AnimatedProductList products={productsMapped.slice(3, 6)} />
+        <AnimatedProductList products={newProducts.data} />
         <Button className="self-center" secondary>
           Voir plus
         </Button>
