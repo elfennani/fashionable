@@ -1,16 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import useSearchParams from "@/features/boutique/hooks/useSearchParams";
 import React, { useEffect, useState } from "react";
+import useFilters from "../hooks/useFilters";
 
 type Props = object;
 
 const SearchInput = ({}: Props) => {
   const [query, setQuery] = useState("");
-  const [, setParam] = useSearchParams();
+  const [, setFilter] = useFilters();
 
   useEffect(() => {
-    const timeout = setTimeout(() => setParam("query", query), 500);
+    const timeout = setTimeout(() => {
+      setFilter("search", query.trim());
+    }, 500);
 
     return () => clearTimeout(timeout);
   }, [query]);

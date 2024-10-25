@@ -1,53 +1,41 @@
 /* eslint-disable @next/next/no-img-element */
-import Container from "@/components/container";
-import { NextPage } from "next";
-import Link from "next/link";
-import products from "@/assets/products.json";
-import { ProductDetails } from "@/types/ProductDetails";
-import CounterInput from "@/components/counter-input";
+import AnimatedProductList from "@/components/animated-product-list";
 import Button from "@/components/button";
+import Container from "@/components/container";
+import CounterInput from "@/components/counter-input";
+import ProductImageSlideshow from "@/components/product-image-slideshow";
 import ProductInfo from "@/components/product-info";
 import SectionTitle from "@/components/section-title";
-import { productsMapped } from "@/app/page";
-import ProductImageSlideshow from "@/components/product-image-slideshow";
-import AnimatedProductList from "@/components/animated-product-list";
+import supabase from "@/utils/supabase";
+import { NextPage } from "next";
+import Link from "next/link";
 
 interface Props {
   params: { slug: string };
 }
 
-const Page: NextPage<Props> = ({ params: { slug } }) => {
-  const productRaw = products.find((product) => product.id === Number(slug))!;
-  const product: ProductDetails = {
-    id: productRaw?.id,
-    available: productRaw.available,
-    category: productRaw.category,
-    delivery: productRaw.delivery,
-    description: productRaw.description,
-    image: productRaw.image,
-    images: productRaw.images,
-    inCart: false,
-    longDescription: productRaw.longDescription,
-    new: productRaw.is_new,
-    price: productRaw.price,
-    basePrice: productRaw.undiscounted_price,
-    size: productRaw.size,
-    specifications: productRaw.specifications,
-    title: productRaw.name,
-    ugs: productRaw.ugs,
-    wishlisted: false,
-    similar: products
-      .filter((p) => productRaw.similar.includes(p.id))
-      .map((product) => ({
-        id: product.id,
-        image: product.image,
-        new: product.is_new,
-        price: product.price,
-        basePrice: product.undiscounted_price,
-        title: product.name,
-        wishlisted: false,
-      })),
-  };
+const Page: NextPage<Props> = async ({ params: { slug } }) => {
+  const { data, error } = await supabase
+    .from("product")
+    .select("*, images ( * ), category!inner(*)")
+    .eq("id", Number(slug))
+    .eq("archived", false)
+    .single();
+
+  if (error) return <div>{error.message}</div>;
+
+  const similarProducts = await supabase
+    .from("product")
+    .select("*, images ( * ), category!inner(*)")
+    .eq("category_id", data.category_id)
+    .eq("archived", false)
+    .neq("id", data.id)
+    .limit(3);
+
+  if (similarProducts.error) return <div>{similarProducts.error.message}</div>;
+
+  const product = data;
+  const similarProductsData = similarProducts.data;
 
   return (
     <div>
@@ -64,10 +52,10 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
             href="/boutique"
             className="hover:text-neutral-700 transition-colors"
           >
-            {product.category}
+            {product.category.name}
           </Link>
           <span>/</span>
-          <span className="text-neutral-700">{product.title}</span>
+          <span className="text-neutral-700">{product.name}</span>
         </Container>
       </div>
       <div className="md:border-b md:border-b-neutral-200">
@@ -76,10 +64,10 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
           <div className="md:py-8 flex flex-col gap-6">
             <div className="flex flex-col gap-4">
               <h1 className="font-display text-4xl md:text-5xl text-balance">
-                {product.title}
+                {product.name}
               </h1>
               <p className="text-neutral-400">
-                {product.available ? (
+                {product.status == "disponible" ? (
                   <span className="font-semibold uppercase text-green-700">
                     disponible
                   </span>
@@ -92,23 +80,27 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
               </p>
             </div>
             <hr className="border-neutral-200" />
-            <p className="font-light leading-loose tracking-wide min-h-32">
-              {product.description}
+            <p className="font-light leading-loose tracking-wide min-h-16">
+              {product.description_short}
             </p>
             <div className="flex gap-10">
-              <div className="flex flex-col gap-2">
-                <p className="font-semibold tracking-tight uppercase">Taille</p>
-                <p className="px-6 py-4 border border-neutral-200">
-                  {product.size}
-                </p>
-              </div>
+              {product.size && (
+                <div className="flex flex-col gap-2">
+                  <p className="font-semibold tracking-tight uppercase">
+                    Taille
+                  </p>
+                  <p className="px-6 py-4 border border-neutral-200">
+                    {product.size}
+                  </p>
+                </div>
+              )}
               <CounterInput max={5} />
             </div>
             <div className="flex max-lg:flex-col gap-6 lg:gap-10">
               <div className="lg:self-end">
-                {product.basePrice && (
+                {product.base_price && (
                   <p className="font-black text-neutral-300 line-through">
-                    {product.basePrice} MAD
+                    {product.base_price} MAD
                   </p>
                 )}
                 <p className="text-4xl font-light text-rose-400 tracking-tighter">
@@ -143,7 +135,7 @@ const Page: NextPage<Props> = ({ params: { slug } }) => {
 
       <Container className="py-8 md:py-16 flex flex-col gap-8 md:gap-16">
         <SectionTitle>Produits similaires</SectionTitle>
-        <AnimatedProductList products={productsMapped.slice(0, 3)} />
+        <AnimatedProductList products={similarProductsData} />
       </Container>
     </div>
   );

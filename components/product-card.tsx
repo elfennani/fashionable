@@ -3,6 +3,7 @@ import Link from "next/link";
 import TextPill from "./text-pill";
 import { Product } from "@/types/Product";
 import { memo } from "react";
+import { isProductNew } from "@/utils/functions";
 
 type Props = {
   product: Product;
@@ -14,16 +15,16 @@ function ProductCard({ product }: Props) {
       <div className="aspect-[4/5] relative overflow-hidden">
         <Link href={`/produit/${product.id}`}>
           <img
-            src={product.image}
-            alt={product.title}
+            src={product.images[0].url}
+            alt={product.name}
             className="w-full h-full object-cover group-hover:scale-110 transition-transform"
           />
           <div className="absolute top-0 left-0 w-full overflow-hidden h-full flex flex-col justify-between">
             <div className="p-4 md:p-6 flex flex-col gap-1 md:gap-2 items-end">
-              {product.new && (
+              {isProductNew(product) && (
                 <TextPill className="bg-green-700">Nouveau</TextPill>
               )}
-              {!!product.basePrice && (
+              {!!product.base_price && (
                 <TextPill className="bg-rose-400">Promo</TextPill>
               )}
             </div>
@@ -39,22 +40,23 @@ function ProductCard({ product }: Props) {
         <Link href={`/produit/${product.id}`} className="flex-1">
           <div>
             <h3 className="text-sm md:text-lg lg:text-2xl group-hover:underline underline-offset-4 font-light tracking-tighter">
-              {product.title}
+              {product.name}
             </h3>
             <p>
               <span className="text-sm md:text-lg text-rose-400 tracking-tight mr-2">
                 {product.price} MAD
               </span>
-              {product.basePrice && (
+              {product.base_price && (
                 <span className="text-neutral-400 line-through max-md:text-xs">
-                  {product.basePrice} MAD
+                  {product.base_price} MAD
                 </span>
               )}
             </p>
           </div>
         </Link>
         <button className="mt-1 ">
-          {product.wishlisted ? (
+          {/* TODO: Check wishlist status */}
+          {false ? (
             <span className="iconify teenyicons--heart-solid text-rose-400 size-4 md:size-6" />
           ) : (
             <span className="iconify teenyicons--heart-outline size-4 md:size-6 text-neutral-400" />

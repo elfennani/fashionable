@@ -1,28 +1,60 @@
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
+import Filter from "../types/Filter";
+import { sortSchema } from "../types/Sort";
 
 const useFilters = () => {
   const params = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-  const page = useMemo(() => {
-    let page = Number(params.get("page"));
-    if (Number.isNaN(page)) page = 0;
+  const filter = useMemo((): Filter => {
+    let filter = {};
 
-    return page;
+    const set = (key: keyof Filter) => {
+      if (params.has(key) && !isNaN(Number(params.get(key)))) {
+        filter = { ...filter, [key]: Number(params.get(key)) };
+      }
+    };
+
+    set("category");
+    set("color");
+    set("min");
+    set("max");
+
+    if (
+      params.has("sort") &&
+      sortSchema.safeParse(params.get("sort")).success
+    ) {
+      filter = { ...filter, sort: params.get("sort") };
+    }
+
+    if (params.has("search")) {
+      filter = { ...filter, search: params.get("search") };
+    }
+
+    return filter;
   }, [params]);
 
-  return useMemo(
-    () => ({
-      category: params.get("category"),
-      color: params.get("color"),
-      min: params.get("min"),
-      max: params.get("max"),
-      sorting: params.get("sort") ?? "popular",
-      query: params.get("query"),
-      page,
-    }),
-    [params, page]
-  );
+  const onFilterChange = <K extends keyof Filter>(key: K, value: Filter[K]) => {
+    const params = new URLSearchParams();
+
+    Object.keys(filter).forEach((key) => {
+      const value = filter[key as unknown as keyof Filter];
+      if (!!value) {
+        params.set(key, String(value));
+      }
+    });
+
+    params.set(key, String(value));
+    if (!value) {
+      params.delete(key);
+    }
+
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  return [filter, onFilterChange] as const;
 };
 
 export default useFilters;

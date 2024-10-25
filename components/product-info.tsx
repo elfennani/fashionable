@@ -1,30 +1,30 @@
 "use client";
-import { ProductDetails } from "@/types/ProductDetails";
 import React, { useState } from "react";
 import Container from "./container";
 import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
+import { Product } from "@/types/Product";
 
 type Props = {
-  product: ProductDetails;
+  product: Product;
 };
 
 type Tab = {
   label: string;
   key: string;
-  property: keyof ProductDetails;
+  property: keyof Product;
 };
 
 const tabs: Tab[] = [
   {
     key: "description",
     label: "Description",
-    property: "longDescription",
+    property: "description_long",
   },
   {
     key: "moreinfo",
     label: "plus d’information",
-    property: "specifications",
+    property: "information",
   },
   {
     key: "livraison",

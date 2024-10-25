@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { ProductDetails } from "@/types/ProductDetails";
 import React, { useState } from "react";
 import TextPill from "./text-pill";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/utils/cn";
+import { isProductNew } from "@/utils/functions";
+import { Product } from "@/types/Product";
 
 type Props = {
-  product: ProductDetails;
+  product: Product;
 };
 
 const ProductImageSlideshow = ({ product }: Props) => {
@@ -23,14 +24,14 @@ const ProductImageSlideshow = ({ product }: Props) => {
     <div className="flex max-lg:flex-col-reverse gap-4 lg:items-center">
       <div className="flex lg:flex-col gap-4">
         {product.images.map((image, i) => (
-          <button key={image} onClick={() => setIndex(i)}>
+          <button key={image.id} onClick={() => setIndex(i)}>
             <img
               className={cn(
                 "h-20 overflow-hidden lg:w-20 opacity-50 aspect-[4/5] transition-opacity object-cover bg-neutral-100",
                 i == index && "opacity-100"
               )}
-              src={image}
-              alt={`${product.title} ${i}`}
+              src={image.url}
+              alt={`${product.name} ${i}`}
             />
           </button>
         ))}
@@ -43,18 +44,18 @@ const ProductImageSlideshow = ({ product }: Props) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, x: 10, scale: 0.8 }}
-              src={product.images[index]}
-              alt={product.title}
+              src={product.images[index].url}
+              alt={product.name}
               className="w-full h-full object-cover col-start-1 row-start-1 origin-right"
             />
           </AnimatePresence>
         </div>
         <div className="absolute top-0 left-0 w-full overflow-hidden h-full flex flex-col justify-between">
           <div className="p-4 md:p-6 flex flex-col gap-1 md:gap-2 items-end">
-            {product.new && (
+            {isProductNew(product) && (
               <TextPill className="bg-green-700">Nouveau</TextPill>
             )}
-            {!!product.basePrice && (
+            {!!product.base_price && (
               <TextPill className="bg-rose-400">Promo</TextPill>
             )}
           </div>
