@@ -22,7 +22,7 @@ const SearchInput = ({}: Props) => {
       <span className="iconify teenyicons--search-outline absolute left-4" />
       <input
         type="text"
-        placeholder="RECHERCHE ICI"
+        placeholder="Recherche ici"
         className="text-base pl-12 pr-4 py-3 w-full"
         value={query}
         onChange={(e) => setQuery(e.target.value)}

@@ -9,20 +9,26 @@ import Testimonial from "@/components/testimonial";
 import supabase from "@/utils/supabase";
 
 export default async function Home() {
-  const categories = await supabase.from("category").select("*").order("name");
+  const categories = await supabase
+    .from("category")
+    .select("*")
+    .order("name")
+    .throwOnError();
   const popularProducts = await supabase
     .from("product")
     .select("*, images ( * ), category!inner(*)")
     .eq("archived", false)
     .order("created_at", { ascending: true })
-    .limit(3);
+    .limit(3)
+    .throwOnError();
 
   const newProducts = await supabase
     .from("product")
     .select("*, images ( * ), category!inner(*)")
     .eq("archived", false)
     .order("created_at", { ascending: false })
-    .limit(3);
+    .limit(3)
+    .throwOnError();
 
   if (categories.error) return <div>{categories.error.message}</div>;
   if (popularProducts.error) return <div>{popularProducts.error.message}</div>;
