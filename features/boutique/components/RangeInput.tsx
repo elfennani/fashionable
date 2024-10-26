@@ -20,7 +20,7 @@ const RangeInput: React.FC<Props> = ({
   onChange,
   values: newValues,
 }) => {
-  const [values, setValues] = React.useState([min, max]);
+  const [values, setValues] = React.useState(newValues as unknown as number[]);
 
   React.useEffect(() => {
     setValues(values);

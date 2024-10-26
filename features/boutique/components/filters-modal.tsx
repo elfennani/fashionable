@@ -1,10 +1,12 @@
 import Button from "@/components/button";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import BoutiqueFilters, { FilterProps } from "./boutique-filters";
+import { cn } from "@/lib/utils";
 
 type Props = {
   open: boolean;
   onDismissRequest: () => void;
-};
+} & FilterProps;
 
 const variants: Variants = {
   hidden: {
@@ -26,7 +28,7 @@ const backdrop: Variants = {
   },
 };
 
-const FiltersModal = ({ open, onDismissRequest }: Props) => {
+const FiltersModal = ({ open, onDismissRequest, ...props }: Props) => {
   return (
     <AnimatePresence>
       {open && (
@@ -54,7 +56,10 @@ const FiltersModal = ({ open, onDismissRequest }: Props) => {
               <span className="iconify teenyicons--x-outline size-4 lg:size-6" />
             </button>
           </header>
-          {/* <BoutiqueFilters className="p-6 overflow-y-auto flex-1" /> */}
+          <BoutiqueFilters
+            {...props}
+            className={cn("p-6 overflow-y-auto flex-1", props.className)}
+          />
           <footer className="px-6 py-4 lg:p-6 flex items-center justify-end gap-4 border-t border-t-neutral-100">
             <Button className="py-3 px-4" onClick={onDismissRequest}>
               Confirmer

@@ -14,6 +14,20 @@ interface Props {
   params: { slug: string };
 }
 
+export async function generateStaticParams() {
+  const { data: products, error } = await supabase
+    .from("product")
+    .select("id")
+    .eq("archived", false)
+    .throwOnError();
+
+  if (!products) throw error;
+
+  return products.map((post) => ({
+    slug: post.id.toString(),
+  }));
+}
+
 const Page: NextPage<Props> = async ({ params: { slug } }) => {
   const { data, error } = await supabase
     .from("product")

@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 import useFilters from "../hooks/useFilters";
 import RangeInput from "./RangeInput";
 
-type Props = {
+export type FilterProps = {
   categories: Category[];
   colors: Color[];
   minPrice: number;
@@ -21,11 +21,13 @@ const BoutiqueFilters = ({
   minPrice,
   className,
   maxProducts,
-}: Props) => {
+}: FilterProps) => {
   // const [params, setParam] = useSearchParams();
   const [filters, setFilter] = useFilters();
 
   const values = [filters.min ?? minPrice, filters.max ?? maxPrice] as const;
+  console.log(filters);
+  console.log(values);
 
   const setValues = ([min, max]: [number, number]) => {
     console.log(min, max);
