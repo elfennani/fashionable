@@ -5,6 +5,7 @@ import NavHeader from "@/components/nav-header";
 import Footer from "@/components/footer";
 import NextTopLoader from "nextjs-toploader";
 import colors from "tailwindcss/colors";
+import Providers from "@/components/providers";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -37,7 +38,7 @@ export default function RootLayout({
       >
         <NextTopLoader color={colors.pink[400]} showSpinner={false} />
         <NavHeader />
-        {children}
+        <Providers>{children}</Providers>
         <Footer />
       </body>
     </html>
