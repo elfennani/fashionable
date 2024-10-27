@@ -4,6 +4,8 @@ import TextPill from "./text-pill";
 import { Product } from "@/types/Product";
 import { memo } from "react";
 import { isProductNew } from "@/utils/functions";
+import WishlistIconButton from "../features/wishlist/components/wishlist-icon-button";
+import ProductCartButton from "@/features/shopping-cart/components/product-cart-button";
 
 type Props = {
   product: Product;
@@ -30,10 +32,7 @@ function ProductCard({ product }: Props) {
             </div>
           </div>
         </Link>
-        <button className="flex absolute bottom-0 right-0 md:w-full max-md:self-end translate-y-full font-semibold group-hover:translate-y-0 transition-all items-center justify-center p-4 md:px-8 md:py-5 gap-6 uppercase tracking-wider bg-rose-50 md:bg-rose-400 hover:bg-rose-100 hover:md:bg-rose-500 text-rose-400 md:text-rose-50">
-          <span className="iconify teenyicons--bag-plus-outline size-4 md:size-6" />
-          <span className="max-md:hidden">Ajouter au panier</span>
-        </button>
+        <ProductCartButton productId={product.id} />
       </div>
 
       <div className="py-2 md:py-4 flex gap-2 items-start">
@@ -54,14 +53,7 @@ function ProductCard({ product }: Props) {
             </p>
           </div>
         </Link>
-        <button className="mt-1 ">
-          {/* TODO: Check wishlist status */}
-          {false ? (
-            <span className="iconify teenyicons--heart-solid text-rose-400 size-4 md:size-6" />
-          ) : (
-            <span className="iconify teenyicons--heart-outline size-4 md:size-6 text-neutral-400" />
-          )}
-        </button>
+        <WishlistIconButton productId={product.id} />
       </div>
     </div>
   );

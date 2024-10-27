@@ -45,7 +45,7 @@ export default async function Home() {
               key={category.id}
               title={category.name}
               image={category.image}
-              href="#"
+              href={`/boutique?category=${category.id}`}
             />
           ))}
         </div>

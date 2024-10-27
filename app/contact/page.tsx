@@ -10,6 +10,7 @@ const ContactPage: NextPage = () => {
   return (
     <main>
       <PageHeader
+        iconClassname="teenyicons--contact-outline"
         title="Contactez-Nous"
         subtitle="Nous sommes là pour répondre à toutes vos questions et vous aider"
       />

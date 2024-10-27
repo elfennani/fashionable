@@ -1,5 +1,6 @@
 import Container from "@/components/container";
 import PageHeader from "@/components/page-header";
+import WishlistProductList from "@/features/wishlist/components/wishlist-product-list";
 import { NextPage } from "next";
 // import { productsMapped } from "../page";
 
@@ -7,16 +8,12 @@ const WishlistPage: NextPage<object> = ({}) => {
   return (
     <main>
       <PageHeader
+        iconClassname="teenyicons--heart-circle-outline"
         title="Votre Liste de Souhaits"
         subtitle="Sauvegardez vos produits favoris pour un achat futur"
       />
       <Container id="content" className="py-4 md:py-8 lg:py-16">
-        {/* TODO: */}
-        {/* <AnimatedProductList
-          products={productsMapped
-            .slice(0, 5)
-            .map((p) => ({ ...p, wishlisted: true }))}
-        /> */}
+        <WishlistProductList />
       </Container>
     </main>
   );

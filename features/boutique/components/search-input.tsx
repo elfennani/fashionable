@@ -2,11 +2,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import useFilters from "../hooks/useFilters";
+import { useSearchParams } from "next/navigation";
 
 type Props = object;
 
 const SearchInput = ({}: Props) => {
   const [query, setQuery] = useState("");
+  const params = useSearchParams();
   const [, setFilter] = useFilters();
 
   useEffect(() => {
@@ -26,6 +28,7 @@ const SearchInput = ({}: Props) => {
         className="text-base pl-12 pr-4 py-3 w-full"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        autoFocus={params.has("focus")}
       />
     </div>
   );

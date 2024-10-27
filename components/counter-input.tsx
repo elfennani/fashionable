@@ -1,12 +1,13 @@
 "use client";
-import { useCallback, useState } from "react";
 import { motion } from "framer-motion";
+import { useCallback, useState } from "react";
 
 type Props = {
   max: number;
+  onChange?(value: number): void;
 };
 
-const CounterInput = ({ max }: Props) => {
+const CounterInput = ({ max, onChange }: Props) => {
   const [counter, setCounter] = useState(1);
 
   const increment = useCallback(() => {
@@ -15,9 +16,10 @@ const CounterInput = ({ max }: Props) => {
         return c;
       }
 
+      onChange?.(c + 1);
       return c + 1;
     });
-  }, [setCounter, max]);
+  }, [setCounter, max, onChange]);
 
   const decrement = useCallback(() => {
     setCounter((c) => {
@@ -25,9 +27,10 @@ const CounterInput = ({ max }: Props) => {
         return c;
       }
 
+      onChange?.(c - 1);
       return c - 1;
     });
-  }, [setCounter]);
+  }, [setCounter, onChange]);
 
   return (
     <div className="flex flex-col gap-2">

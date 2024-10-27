@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import AnimatedProductList from "@/components/animated-product-list";
-import Button from "@/components/button";
 import Container from "@/components/container";
-import CounterInput from "@/components/counter-input";
 import ProductImageSlideshow from "@/components/product-image-slideshow";
 import ProductInfo from "@/components/product-info";
 import SectionTitle from "@/components/section-title";
+import ProductInfoFooter from "@/features/shopping-cart/components/product-info-footer";
+import WishlistButton from "@/features/wishlist/components/wishlist-button";
 import supabase from "@/utils/supabase";
 import { NextPage } from "next";
 import Link from "next/link";
@@ -63,7 +63,7 @@ const Page: NextPage<Props> = async ({ params: { slug } }) => {
           </Link>
           <span>/</span>
           <Link
-            href="/boutique"
+            href={`/boutique?category=${product.category_id}`}
             className="hover:text-neutral-700 transition-colors"
           >
             {product.category.name}
@@ -97,39 +97,8 @@ const Page: NextPage<Props> = async ({ params: { slug } }) => {
             <p className="font-light leading-loose tracking-wide min-h-16">
               {product.description_short}
             </p>
-            <div className="flex gap-10">
-              {product.size && (
-                <div className="flex flex-col gap-2">
-                  <p className="font-semibold tracking-tight uppercase">
-                    Taille
-                  </p>
-                  <p className="px-6 py-4 border border-neutral-200">
-                    {product.size}
-                  </p>
-                </div>
-              )}
-              <CounterInput max={5} />
-            </div>
-            <div className="flex max-lg:flex-col gap-6 lg:gap-10">
-              <div className="lg:self-end">
-                {product.base_price && (
-                  <p className="font-black text-neutral-300 line-through">
-                    {product.base_price} MAD
-                  </p>
-                )}
-                <p className="text-4xl font-light text-rose-400 tracking-tighter">
-                  {product.price} MAD
-                </p>
-              </div>
-              <Button className="flex-1 !px-6">
-                <span className="iconify teenyicons--bag-plus-outline size-6" />
-                Ajouter au panier
-              </Button>
-            </div>
-            <button className="flex items-center max-md:self-center gap-4 uppercase hover:underline py-4 underline-offset-4">
-              <span className="iconify teenyicons--heart-outline size-6" />
-              Ajouter au wishlist
-            </button>
+            <ProductInfoFooter product={product} />
+            <WishlistButton productId={product.id} />
             <div className="flex gap-10 max-md:pb-4 max-md:justify-center">
               <Link href="#" className="p-2 -m-2 group">
                 <span className="iconify teenyicons--whatsapp-outline group-hover:teenyicons--whatsapp-solid size-6" />
