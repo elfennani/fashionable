@@ -1,12 +1,21 @@
 "use client";
 import Logo from "@/assets/LOGO.svg";
-import React, { useState } from "react";
-import Image from "next/image";
 import NavItem from "@/components/nav-item";
-import Link from "next/link";
 import Sidebar from "@/components/sidebar";
 import { Route } from "@/types/Route";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import CartSidebar from "./cart-sidebar";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
+import CartSidebarContent from "@/features/shopping-cart/components/cart-sidebar-content";
+import { Separator } from "@/components/ui/separator";
 
 const routes: Route[] = [
   { name: "Accueil", path: "/" },
@@ -54,13 +63,26 @@ export default function NavHeader() {
           />
         </Link>
         <div className="md:flex-1 flex gap-8 justify-end">
-          <span className="iconify teenyicons--search-outline size-6 max-md:hidden"></span>
-          <Link href="/wishlist">
-            <span className="iconify teenyicons--heart-outline size-6 relative max-md:hidden"></span>
+          <Link href={"/boutique?focus"} className="max-md:hidden">
+            <span className="iconify teenyicons--search-outline size-6"></span>
           </Link>
-          <button className="flex" onClick={() => setCartOpen(true)}>
-            <span className="iconify teenyicons--bag-outline size-6"></span>
-          </button>
+          <Link href="/wishlist" className="max-md:hidden">
+            <span className="iconify teenyicons--heart-outline size-6 relative"></span>
+          </Link>
+          <Sheet>
+            <SheetTrigger asChild>
+              <button className="flex">
+                <span className="iconify teenyicons--bag-outline size-6"></span>
+              </button>
+            </SheetTrigger>
+            <SheetContent className="overflow-y-auto">
+              <SheetHeader className="py-4">
+                <SheetTitle>Panier</SheetTitle>
+              </SheetHeader>
+              <Separator />
+              <CartSidebarContent />
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

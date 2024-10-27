@@ -1,12 +1,11 @@
 "use client";
 import ProductList from "@/components/product-list";
-import Pagination from "./pagination";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Product } from "@/types/Product";
+import supabase from "@/utils/supabase";
 import { useQuery } from "@tanstack/react-query";
 import useFilters from "../hooks/useFilters";
-import supabase from "@/utils/supabase";
-import { Product } from "@/types/Product";
-import { Skeleton } from "@/components/ui/skeleton";
-import { div } from "framer-motion/client";
+import Pagination from "./pagination";
 
 const FilteredProductsList = () => {
   const [filter] = useFilters();
@@ -16,7 +15,7 @@ const FilteredProductsList = () => {
       await new Promise((res) => setTimeout(res, 300));
       let request = supabase
         .from("product")
-        .select("*, images ( * ), category!inner(*)", { count: "estimated" })
+        .select("*, images ( * ), category!inner(*)")
         .eq("archived", false);
 
       if (filter) {
@@ -61,7 +60,7 @@ const FilteredProductsList = () => {
         }
       }
 
-      const { data, count } = await request.throwOnError();
+      const { data } = await request.throwOnError();
 
       if (data) return data;
 
@@ -75,7 +74,7 @@ const FilteredProductsList = () => {
         {Array(3)
           .fill(0)
           .map((_, index) => (
-            <div>
+            <div key={index}>
               <Skeleton className="aspect-[4/5] relative overflow-hidden rounded-none" />
               <div className="py-2 md:py-4 space-y-1 items-start">
                 <Skeleton className="w-full h-5 md:h-7 lg:h-8" />

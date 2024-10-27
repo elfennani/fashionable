@@ -8,9 +8,15 @@ type Props = {
   title: string;
   subtitle: string;
   contentId?: string | null;
+  iconClassname?: string;
 };
 
-const PageHeader = ({ subtitle, title, contentId = "content" }: Props) => {
+const PageHeader = ({
+  subtitle,
+  title,
+  contentId = "content",
+  iconClassname,
+}: Props) => {
   return (
     <div
       className={cn(
@@ -18,7 +24,10 @@ const PageHeader = ({ subtitle, title, contentId = "content" }: Props) => {
         !contentId && "py-16 sm:py-32"
       )}
     >
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col items-center gap-4">
+        {iconClassname && (
+          <span className={cn("iconify size-10 mb-4", iconClassname)} />
+        )}
         <h1 className="text-center font-display uppercase text-3xl md:text-4xl lg:text-5xl tracking-widest font-bold">
           {title}
         </h1>

@@ -11,6 +11,7 @@ const Boutique: NextPage<Props> = ({}) => {
   return (
     <main>
       <PageHeader
+        iconClassname="teenyicons--shop-outline"
         title="Explorez Notre Boutique"
         subtitle="Découvrez Nos Collections Uniques et Tendance"
       />
