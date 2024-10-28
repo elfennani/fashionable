@@ -1,16 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { LinkButton } from "@/components/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import CartQuantityInput from "@/features/shopping-cart/components/cart-quantity-input";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { useEffect, useMemo } from "react";
 import useShoppingCart from "../hooks/use-shopping-cart";
-import CartQuantityInput from "@/features/shopping-cart/components/cart-quantity-input";
-import { Card, CardContent } from "@/components/ui/card";
-import Link from "next/link";
 import CartItemRemoveButton from "./cart-item-remove-button";
-import Button from "@/components/button";
+import { SheetClose } from "@/components/ui/sheet";
 
 const CartSidebarContent = () => {
   const { data: products, isPending, isError, error } = useShoppingCart();
@@ -34,7 +35,7 @@ const CartSidebarContent = () => {
         <span className="iconify teenyicons--exclamation-circle-outline size-4" />
         <AlertTitle>Échec</AlertTitle>
         <AlertDescription>
-          Échec du chargement des produits de la liste de souhaits
+          Échec du chargement des produits de panier
         </AlertDescription>
       </Alert>
     );
@@ -75,11 +76,13 @@ const CartSidebarContent = () => {
           <div className="flex flex-col gap-2 sm:gap-4">
             <div className="flex max-sm:flex-col gap-1 sm:gap-2">
               <div className="sm:flex-1">
-                <Link href={`/produit/${product.id}`}>
-                  <h1 className="sm:text-lg font-light tracking-tight line-clamp-1">
-                    {product.name}
-                  </h1>
-                </Link>
+                <SheetClose asChild>
+                  <Link href={`/produit/${product.id}`}>
+                    <h1 className="sm:text-lg font-light tracking-tight line-clamp-1">
+                      {product.name}
+                    </h1>
+                  </Link>
+                </SheetClose>
                 <p className="font-medium text-xs sm:text-sm">
                   {product.price} MAD •{" "}
                   <span
@@ -128,10 +131,15 @@ const CartSidebarContent = () => {
                 {subtotal + 47} MAD
               </p>
             </div>
-            <Button className="!px-4 max-sm:py-4 w-full text-xs sm:text-sm">
-              procéder à paiement
-              <span className="iconify teenyicons--arrow-right-outline size-4" />
-            </Button>
+            <SheetClose asChild>
+              <LinkButton
+                to="/validation"
+                className="!px-4 max-sm:py-4 w-full text-xs sm:text-sm"
+              >
+                procéder à paiement
+                <span className="iconify teenyicons--arrow-right-outline size-4" />
+              </LinkButton>
+            </SheetClose>
           </div>
         </footer>
       )}

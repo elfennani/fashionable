@@ -18,7 +18,7 @@ export default async function Home() {
     .from("product")
     .select("*, images ( * ), category!inner(*)")
     .eq("archived", false)
-    .order("created_at", { ascending: true })
+    .order("orders", { ascending: false })
     .limit(3)
     .throwOnError();
 
