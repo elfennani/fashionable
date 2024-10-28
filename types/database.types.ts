@@ -89,6 +89,102 @@ export type Database = {
           },
         ]
       }
+      order_items: {
+        Row: {
+          created_at: string
+          id: number
+          order_id: number
+          price: number
+          product_id: number
+          quantity: number
+          total_price: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          order_id: number
+          price: number
+          product_id: number
+          quantity: number
+          total_price: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          order_id?: number
+          price?: number
+          product_id?: number
+          quantity?: number
+          total_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "product"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          email: string
+          first_name: string
+          id: number
+          last_name: string
+          phone: string
+          postal_code: string
+          province: string
+          shipping_fee: number
+          status: string
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string
+          email: string
+          first_name: string
+          id?: number
+          last_name: string
+          phone: string
+          postal_code: string
+          province: string
+          shipping_fee: number
+          status: string
+          total_amount: number
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: number
+          last_name?: string
+          phone?: string
+          postal_code?: string
+          province?: string
+          shipping_fee?: number
+          status?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       product: {
         Row: {
           archived: boolean
@@ -102,6 +198,7 @@ export type Database = {
           id: number
           information: string | null
           name: string
+          orders: number
           price: number
           size: string | null
           status: string
@@ -120,6 +217,7 @@ export type Database = {
           id?: number
           information?: string | null
           name: string
+          orders?: number
           price: number
           size?: string | null
           status: string
@@ -138,6 +236,7 @@ export type Database = {
           id?: number
           information?: string | null
           name?: string
+          orders?: number
           price?: number
           size?: string | null
           status?: string
@@ -150,13 +249,6 @@ export type Database = {
             columns: ["category_id"]
             isOneToOne: false
             referencedRelation: "category"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "product_color_fkey"
-            columns: ["color_id"]
-            isOneToOne: false
-            referencedRelation: "color"
             referencedColumns: ["id"]
           },
           {
