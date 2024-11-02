@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import getCartItems from "@/features/shopping-cart/utils/get-cart-items";
 
 const formSchema = z.object({
   first_name: z
@@ -77,9 +78,31 @@ const OrderingContent = () => {
     [selectedProvince]
   );
 
-  const onSubmit = (data: FormData) => {
-    // TODO: Create a serverless function and save it in Cloudflare
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    if (!process.env.NEXT_PUBLIC_UPLOAD_ORDER) {
+      console.error("NEXT_PUBLIC_UPLOAD_ORDER env var was not provided");
+      return;
+    }
+    const res = await fetch(process.env.NEXT_PUBLIC_UPLOAD_ORDER, {
+      body: JSON.stringify({
+        ...data,
+        products: getCartItems().map((item) => ({
+          id: item.productId,
+          quantity: item.quantity,
+        })),
+      }),
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    console.log(res.status);
+
+    if (res.status != 200) {
+      console.log(await res.json());
+    }
   };
 
   const subtotal = useMemo(
@@ -301,7 +324,11 @@ const OrderingContent = () => {
             {subtotal + 47} MAD
           </p>
         </div>
-        <Button form="validation-form" type="submit">
+        <Button
+          form="validation-form"
+          type="submit"
+          disabled={form.formState.isSubmitting}
+        >
           Commander
           <span className="iconify teenyicons--send-outline size-6" />
         </Button>

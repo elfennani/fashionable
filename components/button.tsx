@@ -23,7 +23,7 @@ const Button = ({
   return (
     <button
       className={cn(
-        "bg-rose-400 px-8 md:px-16 py-5 text-rose-50 flex tracking-widest font-semibold uppercase items-center justify-center gap-4 sm:gap-6 transition-colors hover:bg-rose-500",
+        "bg-rose-400 px-8 md:px-16 py-5 text-rose-50 disabled:bg-neutral-400 disabled:text-neutral-50 flex tracking-widest font-semibold uppercase items-center justify-center gap-4 sm:gap-6 transition-colors hover:bg-rose-500",
         secondary &&
           "bg-rose-50 hover:bg-rose-100 text-rose-400 hover:text-rose-500",
         shadow && "shadow-lg shadow-rose-100",
