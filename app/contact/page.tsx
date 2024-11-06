@@ -1,8 +1,6 @@
-import Button from "@/components/button";
 import Container from "@/components/container";
 import PageHeader from "@/components/page-header";
-import FormInput from "@/features/contact/components/form-input";
-import FormInputContainer from "@/features/contact/components/form-input-container";
+import ContactForm from "@/features/contact/components/contact-form";
 import { cn } from "@/utils/cn";
 import { NextPage } from "next";
 
@@ -34,38 +32,7 @@ const ContactPage: NextPage = () => {
             contact@example.ma
           </ContactInfo>
         </div>
-        <div className="bg-neutral-100 p-4 md:p-8 flex flex-col gap-6 sm:gap-8">
-          <div>
-            <h1 className="font-display font-bold text-2xl sm:text-4xl mb-2">
-              Envoyer un message
-            </h1>
-            <p className="font-light uppercase sm:text-lg">
-              Laissez-nous un message, et nous vous répondrons dans les plus
-              brefs délais
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            <FormInputContainer label="nom complet">
-              <FormInput type="text" placeholder="Nizar Elfennani" />
-            </FormInputContainer>
-            <FormInputContainer label="Téléphone">
-              <FormInput type="tel" placeholder="06 12 34 56 78" />
-            </FormInputContainer>
-            <FormInputContainer label="Email">
-              <FormInput type="email" placeholder="contact@example.ma" />
-            </FormInputContainer>
-          </div>
-          <hr className="border-neutral-300" />
-          <FormInputContainer label="Message">
-            <textarea
-              placeholder="Message"
-              className="px-4 py-3 bg-white placeholder:text-neutral-300 min-h-40"
-            ></textarea>
-          </FormInputContainer>
-          <Button className="sm:self-end">
-            Envoyer <span className="iconify teenyicons--send-outline size-6" />
-          </Button>
-        </div>
+        <ContactForm />
       </Container>
     </main>
   );
