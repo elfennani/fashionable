@@ -1,36 +1,16 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
+import { Database } from "@/types/database.types";
+import Link from "next/link";
+import BannerType from "@/types/Banner";
 
-type Props = object;
+type Props = {
+  banners: BannerType[];
+  collections: Collection[];
+};
 
-const banners = [
-  {
-    title: "Découvrez Notre Nouvelle Collection Automne-Hiver 2024",
-    subtitle: "Des vêtements et accessoires uniques pour un look tendance.",
-    button_text: "Voir la Collection",
-    image: `/banners/1.jpg`,
-    alt_text:
-      "Image de la nouvelle collection automne-hiver avec un mannequin en tenue de saison",
-  },
-  {
-    title: "Accessoires Élégants et Indispensables",
-    subtitle:
-      "Ajoutez une touche d'élégance avec nos nouveaux sacs, lunettes et montres.",
-    button_text: "Acheter les Accessoires",
-    image: `/banners/2.jpg`,
-    alt_text:
-      "Image de divers accessoires tels que sacs, lunettes et montres sur une table en bois",
-  },
-  {
-    title: "Jusqu'à 30% de Réduction sur les Produits Sélectionnés",
-    subtitle:
-      "Profitez de nos offres spéciales sur une sélection de vêtements et accessoires.",
-    button_text: "Voir les Offres",
-    image: `/banners/3.jpg`,
-    alt_text: "Image d'offres promotionnelles avec des produits en réduction",
-  },
-];
+type Collection = Database["public"]["Tables"]["collections"]["Row"];
 
 const variants: Variants = {
   enter: (direction: number) => {
@@ -54,7 +34,7 @@ const variants: Variants = {
   },
 };
 
-export default function Banner({}: Props) {
+export default function Banner({ banners, collections }: Props) {
   const [[page, direction], setIndex] = useState([0, 0]);
   const autoPagination = useRef<NodeJS.Timeout | null | false>(null);
 
@@ -97,13 +77,43 @@ export default function Banner({}: Props) {
     };
   }, []);
 
+  const getDestination = () => {
+    const banner = banners[page];
+
+    if (banner.direction.type == "product-listing") {
+      const params = new URLSearchParams();
+      const { category, sort, color } = banner.direction;
+
+      params.set("sort", sort);
+      if (category) params.set("category", category.id.toString());
+      if (color) params.set("color", color.id.toString());
+
+      return `/boutique?${params.toString()}`;
+    }
+
+    if (banner.direction.type === "collection") {
+      const { collectionId } = banner.direction;
+      const collection = collections.find((c) => c.id === collectionId);
+
+      if (!collection) return "#";
+
+      return `/collection/${collection.slug}`;
+    }
+
+    if (banner.direction.type === "external") {
+      return banner.direction.link;
+    }
+
+    return "#";
+  };
+
   return (
     <div className="w-screen max-h-[80svh] aspect-[9/16] xl:aspect-[21/9] relative overflow-hidden">
       <AnimatePresence initial={false} custom={direction}>
         <motion.img
           custom={direction}
           key={page}
-          src={banners[page].image}
+          src={banners[page].thumbnail_url}
           width={1920}
           height={1280}
           className="size-full object-cover absolute -z-20"
@@ -150,7 +160,10 @@ export default function Banner({}: Props) {
           </div>
         </div>
 
-        <button className="bg-white relative after:block after:absolute after:bg-rose-100 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:w-full after:transition-transform after:top-0 after:left-0 after:bottom-0 px-6 md:px-16 py-6 text-rose-400 flex tracking-wider uppercase items-center justify-center gap-4 sm:gap-6 transition-colors">
+        <Link
+          href={getDestination()}
+          className="bg-white relative after:block after:absolute after:bg-rose-100 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:w-full after:transition-transform after:top-0 after:left-0 after:bottom-0 px-6 md:px-16 py-6 text-rose-400 flex tracking-wider uppercase items-center justify-center gap-4 sm:gap-6 transition-colors"
+        >
           <AnimatePresence initial={false}>
             <motion.span
               key={page}
@@ -158,11 +171,11 @@ export default function Banner({}: Props) {
               animate={{ y: 0, opacity: 1 }}
               className="z-20"
             >
-              {banners[page].button_text}
+              {banners[page].button_label}
             </motion.span>
           </AnimatePresence>
           <span className="iconify teenyicons--top-right-outline size-5 z-20" />
-        </button>
+        </Link>
       </div>
     </div>
   );

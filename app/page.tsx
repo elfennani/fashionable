@@ -6,6 +6,7 @@ import Container from "@/components/container";
 import FeaturedSection from "@/components/featured-section";
 import SectionTitle from "@/components/section-title";
 import Testimonial from "@/components/testimonial";
+import BannerType from "@/types/Banner";
 import supabase from "@/utils/supabase";
 
 export default async function Home() {
@@ -30,13 +31,21 @@ export default async function Home() {
     .limit(3)
     .throwOnError();
 
-  if (categories.error) return <div>{categories.error.message}</div>;
-  if (popularProducts.error) return <div>{popularProducts.error.message}</div>;
-  if (newProducts.error) return <div>{newProducts.error.message}</div>;
+  const collections = await supabase.from("collections").select();
+  const slideshows = await supabase.from("slideshow").select();
+
+  if (categories.error) throw categories.error;
+  if (popularProducts.error) throw popularProducts.error;
+  if (newProducts.error) throw newProducts.error;
+  if (collections.error) throw collections.error;
+  if (slideshows.error) throw slideshows.error;
 
   return (
     <main>
-      <Banner />
+      <Banner
+        banners={slideshows.data as BannerType[]}
+        collections={collections.data}
+      />
       <Container className="py-8 max-md:px-8 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nos Catégories</SectionTitle>
         <div className="flex flex-wrap gap-8 md:gap-16 md:items-center md:justify-center flex-col md:flex-row">
