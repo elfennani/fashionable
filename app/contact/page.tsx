@@ -1,10 +1,13 @@
 import Container from "@/components/container";
 import PageHeader from "@/components/page-header";
 import ContactForm from "@/features/contact/components/contact-form";
+import getPrefs from "@/features/preferences/functions/get-prefs";
 import { cn } from "@/utils/cn";
 import { NextPage } from "next";
 
-const ContactPage: NextPage = () => {
+const ContactPage: NextPage = async () => {
+  const prefs = await getPrefs();
+
   return (
     <main>
       <PageHeader
@@ -22,14 +25,14 @@ const ContactPage: NextPage = () => {
             iconClassName="teenyicons--phone-solid md"
             title="Téléphone"
           >
-            +212 6 12 34 56 78
+            {prefs.phone}
           </ContactInfo>
           <ContactInfo
             className="max-lg:md:flex-1"
             iconClassName="teenyicons--at-outline"
             title="Email"
           >
-            contact@example.ma
+            {prefs.email}
           </ContactInfo>
         </div>
         <ContactForm />
