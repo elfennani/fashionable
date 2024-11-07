@@ -15,7 +15,7 @@ function Testimonial(props: Props) {
       <div className="flex items-center gap-2">
         {Array(Math.floor(props.rating))
           .fill("")
-          .map((index) => (
+          .map((_, index) => (
             <span
               className="iconify teenyicons--star-solid size-4 text-rose-400"
               key={index}

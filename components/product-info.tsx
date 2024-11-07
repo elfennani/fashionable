@@ -61,13 +61,13 @@ const ProductInfo = ({ product }: Props) => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               exit={{ opacity: 0, scale: 0.8, x: 20 }}
-              className="col-start-1 row-start-1"
+              style={{ gridColumnStart: 1, gridRowStart: 1 }}
             >
-              <p
+              <div
                 dangerouslySetInnerHTML={{
                   __html: product[activeTab.property] as string,
                 }}
-              ></p>
+              />
             </motion.div>
           </AnimatePresence>
         </div>

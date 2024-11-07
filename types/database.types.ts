@@ -33,6 +33,66 @@ export type Database = {
         }
         Relationships: []
       }
+      collection_items: {
+        Row: {
+          collection_id: number
+          created_at: string
+          product_id: number
+        }
+        Insert: {
+          collection_id: number
+          created_at?: string
+          product_id: number
+        }
+        Update: {
+          collection_id?: number
+          created_at?: string
+          product_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "collection_items_collection_id_fkey"
+            columns: ["collection_id"]
+            isOneToOne: false
+            referencedRelation: "collections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "collection_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "product"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      collections: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: number
+          keywords: string
+          slug: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          keywords: string
+          slug: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          keywords?: string
+          slug?: string
+          title?: string
+        }
+        Relationships: []
+      }
       color: {
         Row: {
           created_at: string
@@ -89,6 +149,33 @@ export type Database = {
           },
         ]
       }
+      messages: {
+        Row: {
+          content: string
+          created_at: string
+          email: string
+          full_name: string
+          id: number
+          phone: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: number
+          phone: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: number
+          phone?: string
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -139,6 +226,7 @@ export type Database = {
           address: string
           city: string
           created_at: string
+          delivery_number: string | null
           email: string
           first_name: string
           id: number
@@ -155,6 +243,7 @@ export type Database = {
           address: string
           city: string
           created_at?: string
+          delivery_number?: string | null
           email: string
           first_name: string
           id?: number
@@ -171,6 +260,7 @@ export type Database = {
           address?: string
           city?: string
           created_at?: string
+          delivery_number?: string | null
           email?: string
           first_name?: string
           id?: number
@@ -182,6 +272,57 @@ export type Database = {
           status?: string
           total_amount?: number
           updated_at?: string
+        }
+        Relationships: []
+      }
+      pages: {
+        Row: {
+          content: string
+          created_at: string
+          description: string | null
+          id: number
+          keywords: string
+          slug: string
+          title: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          description?: string | null
+          id?: number
+          keywords: string
+          slug: string
+          title: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          description?: string | null
+          id?: number
+          keywords?: string
+          slug?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      preferences: {
+        Row: {
+          created_at: string
+          key: string
+          type: string
+          value: string
+        }
+        Insert: {
+          created_at?: string
+          key: string
+          type: string
+          value: string
+        }
+        Update: {
+          created_at?: string
+          key?: string
+          type?: string
+          value?: string
         }
         Relationships: []
       }
@@ -260,9 +401,81 @@ export type Database = {
           },
         ]
       }
+      slideshow: {
+        Row: {
+          button_label: string
+          created_at: string
+          direction: Json
+          id: number
+          index: number
+          thumbnail_file_name: string | null
+          thumbnail_url: string
+          title: string
+        }
+        Insert: {
+          button_label: string
+          created_at?: string
+          direction: Json
+          id?: number
+          index: number
+          thumbnail_file_name?: string | null
+          thumbnail_url: string
+          title: string
+        }
+        Update: {
+          button_label?: string
+          created_at?: string
+          direction?: Json
+          id?: number
+          index?: number
+          thumbnail_file_name?: string | null
+          thumbnail_url?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      testimonials: {
+        Row: {
+          city: string | null
+          created_at: string
+          full_name: string
+          id: number
+          image_file_name: string
+          image_url: string
+          message: string
+          rating: number
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          full_name: string
+          id?: number
+          image_file_name: string
+          image_url: string
+          message: string
+          rating: number
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          full_name?: string
+          id?: number
+          image_file_name?: string
+          image_url?: string
+          message?: string
+          rating?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      order_status_count_view: {
+        Row: {
+          count: number | null
+          status: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_categories: {

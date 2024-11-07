@@ -28,7 +28,11 @@ export async function generateStaticParams() {
   }));
 }
 
-const Page: NextPage<Props> = async ({ params: { slug } }) => {
+const Page: NextPage<Props> = async (props) => {
+  const params = await props.params;
+
+  const { slug } = params;
+
   const { data, error } = await supabase
     .from("product")
     .select("*, images ( * ), category!inner(*)")
