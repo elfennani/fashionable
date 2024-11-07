@@ -1,14 +1,15 @@
-import Logo from "@/assets/LOGO.svg";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { Route } from "@/types/Route";
-import Link from "next/link";
 import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 
 type Props = {
   routes: Route[];
   visible: boolean;
   onClose?: () => void;
+  logo: string;
+  title: string;
 };
 
 const container = {
@@ -29,7 +30,7 @@ const item = {
   },
 };
 
-const Sidebar = ({ routes, onClose, visible }: Props) => {
+const Sidebar = ({ routes, onClose, visible, logo, title }: Props) => {
   return (
     <div className="lg:hidden">
       <AnimatePresence>
@@ -61,7 +62,7 @@ const Sidebar = ({ routes, onClose, visible }: Props) => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <Image src={Logo} alt="Fashionable" height={16} />
+              <img src={logo} alt={title} height={16} />
             </motion.div>
             <motion.ul
               variants={container}

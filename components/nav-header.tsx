@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import Logo from "@/assets/LOGO.svg";
 import NavItem from "@/components/nav-item";
 import Sidebar from "@/components/sidebar";
+import { Separator } from "@/components/ui/separator";
+import CartSidebarContent from "@/features/shopping-cart/components/cart-sidebar-content";
 import { Route } from "@/types/Route";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import CartSidebar from "./cart-sidebar";
@@ -14,8 +15,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import CartSidebarContent from "@/features/shopping-cart/components/cart-sidebar-content";
-import { Separator } from "@/components/ui/separator";
 
 const routes: Route[] = [
   { name: "Accueil", path: "/" },
@@ -23,7 +22,12 @@ const routes: Route[] = [
   { name: "Contact", path: "/contact" },
 ];
 
-export default function NavHeader() {
+interface Props {
+  logo: string;
+  title: string;
+}
+
+export default function NavHeader(props: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -39,6 +43,7 @@ export default function NavHeader() {
             <span className="iconify heroicons-outline--menu-alt-4 size-6" />
           </button>
           <Sidebar
+            {...props}
             routes={routes}
             visible={sidebarOpen}
             onClose={() => setSidebarOpen(false)}
@@ -56,9 +61,9 @@ export default function NavHeader() {
           </ul>
         </nav>
         <Link href="/" className="flex-1">
-          <Image
-            src={Logo}
-            alt="Fashionable"
+          <img
+            src={props.logo}
+            alt={props.title}
             className="h-6 w-full max-md:h-4"
           />
         </Link>
