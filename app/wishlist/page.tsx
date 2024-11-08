@@ -1,8 +1,11 @@
 import Container from "@/components/container";
 import PageHeader from "@/components/page-header";
 import WishlistProductList from "@/features/wishlist/components/wishlist-product-list";
-import { NextPage } from "next";
-// import { productsMapped } from "../page";
+import { Metadata, NextPage } from "next";
+
+export const metadata: Metadata = {
+  title: "Liste des souhaits",
+};
 
 const WishlistPage: NextPage<object> = ({}) => {
   return (

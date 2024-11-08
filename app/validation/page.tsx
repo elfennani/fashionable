@@ -1,7 +1,11 @@
 "use client";
 import PageHeader from "@/components/page-header";
 import OrderingContent from "@/features/ordering/components/ordering-content";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
+
+export const metadata: Metadata = {
+  title: "Validation d'achat",
+};
 
 const ValidationPage: NextPage<object> = ({}) => {
   return (

@@ -3,7 +3,7 @@ import PageHeader from "@/components/page-header";
 import ProductList from "@/components/product-list";
 import supabase from "@/utils/supabase";
 import { error } from "console";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 
 export async function generateStaticParams() {
   const { data: collections, error } = await supabase
@@ -19,6 +19,27 @@ export async function generateStaticParams() {
 interface Props {
   params: Promise<{ slug: string }>;
 }
+
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const { slug } = await params;
+  const { data: collection, error } = await supabase
+    .from("collections")
+    .select()
+    .eq("slug", slug)
+    .single();
+
+  if (error) throw error;
+
+  const { title, description, keywords } = collection;
+
+  return {
+    title,
+    description,
+    keywords,
+  };
+};
 
 const CollectionPage: NextPage<Props> = async ({ params }) => {
   const { slug } = await params;
