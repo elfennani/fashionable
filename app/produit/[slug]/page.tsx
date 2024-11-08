@@ -7,7 +7,7 @@ import SectionTitle from "@/components/section-title";
 import ProductInfoFooter from "@/features/shopping-cart/components/product-info-footer";
 import WishlistButton from "@/features/wishlist/components/wishlist-button";
 import supabase from "@/utils/supabase";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 import Link from "next/link";
 
 interface Props {
@@ -28,6 +28,27 @@ export async function generateStaticParams() {
   }));
 }
 
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const { slug } = await params;
+  const { data: product, error } = await supabase
+    .from("product")
+    .select("*, images ( * ), category!inner(*)")
+    .eq("id", Number(slug))
+    .eq("archived", false)
+    .single();
+
+  if (error) throw error;
+
+  const { name, description_short } = product;
+
+  return {
+    title: name,
+    description: description_short,
+  };
+};
+
 const Page: NextPage<Props> = async (props) => {
   const params = await props.params;
 
@@ -40,7 +61,7 @@ const Page: NextPage<Props> = async (props) => {
     .eq("archived", false)
     .single();
 
-  if (error) return <div>{error.message}</div>;
+  if (error) throw error;
 
   const similarProducts = await supabase
     .from("product")

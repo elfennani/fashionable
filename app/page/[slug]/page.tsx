@@ -1,7 +1,7 @@
 import Container from "@/components/container";
 import PageHeader from "@/components/page-header";
 import supabase from "@/utils/supabase";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 
 export async function generateStaticParams() {
   const { data: pages, error } = await supabase
@@ -17,6 +17,25 @@ export async function generateStaticParams() {
 interface Props {
   params: Promise<{ slug: string }>;
 }
+
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const { slug } = await params;
+  const { data: page, error } = await supabase
+    .from("pages")
+    .select()
+    .eq("slug", slug)
+    .single();
+
+  if (error) throw error;
+
+  return {
+    title: page.title,
+    description: page.description,
+    keywords: page.keywords,
+  };
+};
 
 const CustomPage: NextPage<Props> = async ({ params }) => {
   const { slug } = await params;

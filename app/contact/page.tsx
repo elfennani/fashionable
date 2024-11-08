@@ -3,7 +3,15 @@ import PageHeader from "@/components/page-header";
 import ContactForm from "@/features/contact/components/contact-form";
 import getPrefs from "@/features/preferences/functions/get-prefs";
 import { cn } from "@/utils/cn";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
+
+export const metadata: Metadata = {
+  title: "Contactez-nous",
+  description:
+    "Besoin d’aide ou d’informations supplémentaires ? Contactez-nous et notre équipe se fera un plaisir de vous assister. Remplissez le formulaire de contact ou utilisez les informations fournies pour nous joindre directement.",
+  keywords:
+    "contact, assistance, support, service client, aide, informations, formulaire de contact",
+};
 
 const ContactPage: NextPage = async () => {
   const prefs = await getPrefs();

@@ -2,10 +2,18 @@ import Container from "@/components/container";
 import PageHeader from "@/components/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
 import BoutiqueContent from "@/features/boutique/components/boutique-content";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 import { Suspense } from "react";
 
 type Props = object;
+
+export const metadata: Metadata = {
+  title: "Boutique",
+  description:
+    "Explorez notre boutique en ligne et découvrez nos collections uniques et tendance. Parcourez une variété de catégories et trouvez des articles de mode qui vous correspondent. Profitez de nos nouveautés et des produits les plus populaires !",
+  keywords:
+    "boutique, mode, collections, shop, tendance, nouveautés, catégories, accessoires, vêtements",
+};
 
 const Boutique: NextPage<Props> = ({}) => {
   return (

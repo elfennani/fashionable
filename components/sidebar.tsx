@@ -83,12 +83,13 @@ const Sidebar = ({ routes, onClose, visible, logo, title }: Props) => {
                 </motion.li>
               ))}
             </motion.ul>
-            <Link href={"/recherche"} passHref>
+            <Link href={"/boutique?focus"} passHref>
               <motion.a
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 className="py-3 flex items-center gap-4 font-bold uppercase"
+                onClick={onClose}
               >
                 <span className="iconify teenyicons--search-outline size-6" />
                 Recherche
@@ -98,6 +99,7 @@ const Sidebar = ({ routes, onClose, visible, logo, title }: Props) => {
               <motion.a
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
+                onClick={onClose}
                 transition={{ delay: 0.3 }}
                 className="py-3 flex items-center gap-4 font-bold uppercase"
               >
