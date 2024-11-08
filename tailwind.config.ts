@@ -96,6 +96,7 @@ const config: Config = {
     addIconSelectors(["teenyicons", "heroicons-outline"]),
     require("tailwind-scrollbar-hide"),
     require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
   ],
 };
 export default config;
