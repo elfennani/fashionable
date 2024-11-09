@@ -7,4 +7,5 @@ type CategoryDB = Database["public"]["Tables"]["category"]["Row"];
 export interface Product extends ProductDB {
   images: ImageDB[];
   category: CategoryDB;
+  popularity?: number;
 }

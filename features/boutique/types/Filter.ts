@@ -7,4 +7,5 @@ export default interface Filter {
   max?: number;
   sort?: Sort;
   search?: string;
+  page?: number;
 }

@@ -1,37 +1,25 @@
 "use client";
-import Category from "@/types/Category";
-import { Color } from "@/types/Color";
 import { cn } from "@/utils/cn";
+import { useBoutiqueSettings } from "../contexts/boutique-settings-context";
 import useFilters from "../hooks/useFilters";
 import RangeInput from "./RangeInput";
 
-export type FilterProps = {
-  categories: Category[];
-  colors: Color[];
-  minPrice: number;
-  maxPrice: number;
-  maxProducts: number;
-  className?: string;
-};
-
-const BoutiqueFilters = ({
-  categories,
-  colors,
-  maxPrice,
-  minPrice,
-  className,
-  maxProducts,
-}: FilterProps) => {
+const BoutiqueFilters = ({ className }: { className?: string }) => {
   // const [params, setParam] = useSearchParams();
   const [filters, setFilter] = useFilters();
+  const { categories, colors, priceRange, totalProductsCount } =
+    useBoutiqueSettings();
 
-  const values = [filters.min ?? minPrice, filters.max ?? maxPrice] as const;
+  const values = [
+    filters.min ?? priceRange.min,
+    filters.max ?? priceRange.max,
+  ] as const;
 
   const setValues = ([min, max]: [number, number]) => {
-    if (min == minPrice) setFilter("min", undefined);
+    if (min == priceRange.min) setFilter("min", undefined);
     else if (min != filters.min) setFilter("min", min);
 
-    if (max == maxPrice) setFilter("max", undefined);
+    if (max == priceRange.max) setFilter("max", undefined);
     else if (max != filters.max) setFilter("max", max);
   };
 
@@ -46,7 +34,7 @@ const BoutiqueFilters = ({
             !filters.category && "font-semibold text-rose-400 opacity-100"
           )}
         >
-          Tous les produit <span>{maxProducts}</span>
+          Tous les produit <span>{totalProductsCount}</span>
         </button>
         {categories.map((category) => (
           <li key={category.id}>
@@ -70,8 +58,8 @@ const BoutiqueFilters = ({
         <RangeInput
           values={values}
           onChange={setValues}
-          min={minPrice}
-          max={maxPrice}
+          min={priceRange.min}
+          max={priceRange.max}
         />
       </div>
       <div className="flex flex-col gap-4">

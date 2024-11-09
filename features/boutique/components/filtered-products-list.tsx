@@ -1,98 +1,107 @@
 "use client";
 import ProductList from "@/components/product-list";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Product } from "@/types/Product";
-import supabase from "@/utils/supabase";
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo } from "react";
+import useProductList from "../contexts/product-list-context";
 import useFilters from "../hooks/useFilters";
 import Pagination from "./pagination";
 
 const FilteredProductsList = () => {
-  const [filter] = useFilters();
-  const { data, isPending, isError } = useQuery<Product[]>({
-    queryKey: ["products", "list", "filtered", filter],
-    queryFn: async () => {
-      await new Promise((res) => setTimeout(res, 300));
-      let request = supabase
-        .from("product")
-        .select("*, images ( * ), category!inner(*)")
-        .eq("archived", false);
+  const [filter, setFilter] = useFilters();
+  const products = useProductList();
+  const filteredProducts = useMemo(() => {
+    let p = products;
 
-      if (filter) {
-        switch (filter.sort) {
-          case "popular":
-            request = request.order("created_at", { ascending: false });
-            break;
+    if (filter) {
+      switch (filter.sort ?? "POPULAR") {
+        case "POPULAR":
+          p = p.sort((p_a, p_b) => {
+            const { popularity: b, created_at: _a } = p_a;
+            const { popularity: a, created_at: _b } = p_b;
+            if (b != undefined && a != undefined) return b - a;
 
-          case "increasing":
-            request = request.order("price", { ascending: true });
-            break;
+            return new Date(_b).getTime() - new Date(_a).getTime();
+          });
+          break;
 
-          case "decreasing":
-            request = request.order("price", { ascending: false });
-            break;
+        case "PRICE_ASC":
+          p = p.sort(({ price: a }, { price: b }) => a - b);
+          break;
 
-          default:
-            request = request.order("created_at", { ascending: false });
-            break;
-        }
-
-        if (filter.search?.trim()) {
-          const query = "'" + filter.search.split(" ").join("' | '") + "'";
-          request = request.textSearch("name", query, {});
-        }
-
-        if (filter.category) {
-          request = request.eq("category_id", filter.category);
-        }
-
-        if (filter.color) {
-          request = request.eq("color_id", filter.color);
-        }
-
-        if (filter.min) {
-          request = request.gte("price", filter.min);
-        }
-
-        if (filter.max) {
-          request = request.lte("price", filter.max);
-        }
+        case "PRICE_DESC":
+          p = p.sort(({ price: a }, { price: b }) => b - a);
+          break;
+        case "NAME_ASC":
+          p = p.sort(({ name: a }, { name: b }) =>
+            a.localeCompare(b, undefined, { sensitivity: "base" })
+          );
+          break;
+        case "NAME_DESC":
+          p = p
+            .sort(({ name: a }, { name: b }) =>
+              a.localeCompare(b, undefined, { sensitivity: "base" })
+            )
+            .reverse();
+          break;
+        case "DATE_ADDED_DESC":
+          p.sort(({ created_at: a }, { created_at: b }) => {
+            return new Date(b).getTime() - new Date(a).getTime();
+          });
+          break;
+        case "DATE_ADDED_ASC":
+          p.sort(({ created_at: a }, { created_at: b }) => {
+            return new Date(a).getTime() - new Date(b).getTime();
+          });
+          break;
       }
 
-      const { data } = await request.throwOnError();
+      if (filter.search?.trim()) {
+        p = p.filter((product) =>
+          filter.search
+            ?.trim()
+            .split(" ")
+            .every((word) =>
+              product.name.toLowerCase().includes(word.toLowerCase())
+            )
+        );
+      }
 
-      if (data) return data;
+      if (filter.category) {
+        p = p.filter((product) => product.category_id == filter.category);
+      }
 
-      return [];
-    },
-  });
+      if (filter.color) {
+        p = p.filter((product) => product.color_id == filter.color);
+      }
 
-  if (isPending) {
-    return (
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8">
-        {Array(3)
-          .fill(0)
-          .map((_, index) => (
-            <div key={index}>
-              <Skeleton className="aspect-[4/5] relative overflow-hidden rounded-none" />
-              <div className="py-2 md:py-4 space-y-1 items-start">
-                <Skeleton className="w-full h-5 md:h-7 lg:h-8" />
-                <Skeleton className="w-1/2 h-4 md:h-6" />
-              </div>
-            </div>
-          ))}
-      </div>
-    );
-  }
+      if (filter.min) {
+        p = p.filter((product) => product.price >= filter.min!);
+      }
 
-  if (isError) {
-    return <div>Failed to get products</div>;
-  }
+      if (filter.max) {
+        p = p.filter((product) => product.price <= filter.max!);
+      }
+    }
+
+    return p;
+  }, [products, filter]);
+
+  const pagedProducts = useMemo(() => {
+    const page = Math.max((filter.page ?? 1) - 1, 0);
+    return filteredProducts.slice(page * 6, page * 6 + 6);
+  }, [filteredProducts, filter]);
+
+  useEffect(() => {
+    const maxPages = Math.ceil(filteredProducts.length / 6);
+
+    if ((filter.page ?? 1) > maxPages) {
+      setFilter("page", maxPages);
+    }
+  }, [filter, filteredProducts, setFilter]);
 
   return (
     <>
-      <ProductList products={data} />
-      <Pagination maxPages={1} />
+      <ProductList products={pagedProducts} />
+      <Pagination maxPages={Math.ceil(filteredProducts.length / 6)} />
     </>
   );
 };

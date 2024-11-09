@@ -13,14 +13,15 @@ const Pagination = ({ maxPages }: Props) => {
 
   const page = useMemo(() => {
     const page = params.get("page");
-    if (!page || Number.isNaN(Number(page))) return 0;
+    if (!page || Number.isNaN(Number(page))) return 1;
 
-    return Number(page);
+    return Math.max(Number(page), 0);
   }, [params]);
+
   const paramsString = useCallback(
     (page: number) => {
       const newParams = new URLSearchParams(params);
-      newParams.set("page", page.toString());
+      newParams.set("page", (page + 1).toString());
 
       return newParams;
     },
@@ -34,24 +35,19 @@ const Pagination = ({ maxPages }: Props) => {
         .map((_, i) => (
           <Link
             key={i}
-            // onClick={() => setPage(i)}
             href={`/boutique?${paramsString(i)}#content`}
             className={cn(
               "text-2xl px-3 py-2 font-light text-neutral-400 hover:text-neutral-700 transition-colors",
-              i == page && "font-bold text-rose-400 hover:text-rose-600"
+              i == page - 1 && "font-bold text-rose-400 hover:text-rose-600"
             )}
           >
             {i + 1}
           </Link>
         ))}
-      {page != maxPages - 1 && (
+      {page != maxPages && (
         <Link
           className="flex px-3 self-stretch items-center disabled:opacity-50 transition-colors enabled:text-neutral-400 enabled:hover:text-neutral-700"
           href={`/boutique?${paramsString(page + 1)}#content`}
-          // onClick={() => {
-          //   return setPage(page + 1);
-          // }}
-          // disabled={page == maxPages - 1}
         >
           <span className="iconify teenyicons--arrow-right-outline size-5 " />
         </Link>
