@@ -1,9 +1,9 @@
 import supabase from "@/utils/supabase";
 import Prefs from "../types/Prefs";
-import { cache } from "react";
+
+export const revalidate = 0;
 
 async function getPrefs() {
-  console.log("first");
   const { data, error } = await supabase.from("preferences").select();
 
   if (error) throw error;
@@ -18,4 +18,4 @@ async function getPrefs() {
   return preferences;
 }
 
-export default cache(getPrefs);
+export default getPrefs;

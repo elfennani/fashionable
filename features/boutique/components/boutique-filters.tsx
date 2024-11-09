@@ -26,11 +26,8 @@ const BoutiqueFilters = ({
   const [filters, setFilter] = useFilters();
 
   const values = [filters.min ?? minPrice, filters.max ?? maxPrice] as const;
-  console.log(filters);
-  console.log(values);
 
   const setValues = ([min, max]: [number, number]) => {
-    console.log(min, max);
     if (min == minPrice) setFilter("min", undefined);
     else if (min != filters.min) setFilter("min", min);
 
