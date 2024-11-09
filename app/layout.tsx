@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import NextTopLoader from "nextjs-toploader";
 import colors from "tailwindcss/colors";
 import Providers from "@/components/providers";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import getPrefs from "@/features/preferences/functions/get-prefs";
 
 const lato = Lato({
@@ -51,10 +52,12 @@ export default async function RootLayout({
       <body
         className={`${playfairDisplay.variable} ${lato.className} antialiased text-gray-700 group/body scroll-smooth`}
       >
-        <NextTopLoader color={colors.pink[400]} showSpinner={false} />
-        <NavHeader logo={prefs.logo} title={prefs.title} />
-        <Providers>{children}</Providers>
-        <Footer />
+        <NuqsAdapter>
+          <NextTopLoader color={colors.pink[400]} showSpinner={false} />
+          <NavHeader logo={prefs.logo} title={prefs.title} />
+          <Providers>{children}</Providers>
+          <Footer />
+        </NuqsAdapter>
       </body>
     </html>
   );

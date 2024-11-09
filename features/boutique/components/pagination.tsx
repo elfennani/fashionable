@@ -3,6 +3,7 @@ import { cn } from "@/utils/cn";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import React, { useCallback, useMemo } from "react";
+import useFilters from "../hooks/useFilters";
 
 type Props = {
   maxPages: number;
@@ -10,6 +11,7 @@ type Props = {
 
 const Pagination = ({ maxPages }: Props) => {
   const params = useSearchParams();
+  const [, setFilter] = useFilters();
 
   const page = useMemo(() => {
     const page = params.get("page");
@@ -40,6 +42,10 @@ const Pagination = ({ maxPages }: Props) => {
               "text-2xl px-3 py-2 font-light text-neutral-400 hover:text-neutral-700 transition-colors",
               i == page - 1 && "font-bold text-rose-400 hover:text-rose-600"
             )}
+            onClick={(e) => {
+              e.preventDefault();
+              setFilter("page", i + 1);
+            }}
           >
             {i + 1}
           </Link>

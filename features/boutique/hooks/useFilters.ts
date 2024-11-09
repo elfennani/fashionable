@@ -1,58 +1,46 @@
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { parseAsInteger, parseAsString, useQueryState } from "nuqs";
 import { useMemo } from "react";
 import Filter from "../types/Filter";
 import { sortSchema } from "../types/Sort";
 
 const useFilters = () => {
-  const params = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+  const [category, setCategory] = useQueryState("category", {
+    ...parseAsInteger,
+    clearOnDefault: true,
+    defaultValue: -1,
+  });
+  const [color, setColor] = useQueryState("color", parseAsInteger);
+  const [min, setMin] = useQueryState("min", parseAsInteger);
+  const [max, setMax] = useQueryState("max", parseAsInteger);
+  const [page, setPage] = useQueryState("page", parseAsInteger);
+  const [search, setSearch] = useQueryState("search", parseAsString);
+  const [sort, setSort] = useQueryState("sort", parseAsString);
 
   const filter = useMemo((): Filter => {
-    let filter = {};
-
-    const set = (key: keyof Filter) => {
-      if (params.has(key) && !isNaN(Number(params.get(key)))) {
-        filter = { ...filter, [key]: Number(params.get(key)) };
-      }
+    return {
+      category: category ?? undefined,
+      color: color ?? undefined,
+      max: max ?? undefined,
+      min: min ?? undefined,
+      page: page ?? undefined,
+      search: search ?? undefined,
+      sort: sortSchema.safeParse(sort).data ?? undefined,
     };
-
-    set("category");
-    set("color");
-    set("min");
-    set("max");
-    set("page");
-
-    if (
-      params.has("sort") &&
-      sortSchema.safeParse(params.get("sort")).success
-    ) {
-      filter = { ...filter, sort: params.get("sort") };
-    }
-
-    if (params.has("search")) {
-      filter = { ...filter, search: params.get("search") };
-    }
-
-    return filter;
-  }, [params]);
+  }, [category, color, min, max, page, search, sort]);
 
   const onFilterChange = <K extends keyof Filter>(key: K, value: Filter[K]) => {
-    const params = new URLSearchParams();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const updater: Record<keyof Filter, (value: any) => void> = {
+      category: setCategory,
+      color: setColor,
+      max: setMax,
+      min: setMin,
+      page: setPage,
+      search: setSearch,
+      sort: setSort,
+    };
 
-    Object.keys(filter).forEach((key) => {
-      const value = filter[key as unknown as keyof Filter];
-      if (!!value) {
-        params.set(key, String(value));
-      }
-    });
-
-    params.set(key, String(value));
-    if (!value) {
-      params.delete(key);
-    }
-
-    replace(`${pathname}?${params.toString()}`, { scroll: false });
+    updater[key](value);
   };
 
   return [filter, onFilterChange] as const;

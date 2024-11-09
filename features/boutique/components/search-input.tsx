@@ -7,14 +7,14 @@ import { useSearchParams } from "next/navigation";
 type Props = object;
 
 const SearchInput = ({}: Props) => {
-  const [query, setQuery] = useState("");
   const params = useSearchParams();
-  const [, setFilter] = useFilters();
+  const [filters, setFilter] = useFilters();
+  const [query, setQuery] = useState(filters.search ?? "");
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setFilter("search", query.trim());
-    }, 500);
+    }, 200);
 
     return () => clearTimeout(timeout);
   }, [query]);
