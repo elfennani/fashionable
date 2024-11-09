@@ -15,8 +15,8 @@ const FilteredProductsList = () => {
       switch (filter.sort ?? "POPULAR") {
         case "POPULAR":
           p = p.sort((p_a, p_b) => {
-            const { popularity: b, created_at: _a } = p_a;
-            const { popularity: a, created_at: _b } = p_b;
+            const { popularity: a, created_at: _a } = p_a;
+            const { popularity: b, created_at: _b } = p_b;
             if (b != undefined && a != undefined) return b - a;
 
             return new Date(_b).getTime() - new Date(_a).getTime();
