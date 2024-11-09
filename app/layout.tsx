@@ -35,6 +35,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
     applicationName: title,
   };
 };
+// export const revalidate = 0;
+export const dynamic = "force-static";
+export const fetchCache = "only-no-store";
 
 export default async function RootLayout({
   children,

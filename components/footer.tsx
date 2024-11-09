@@ -21,6 +21,8 @@ const socialMediaIcon: Record<SocialMedium, string> = {
   telegram: "teenyicons--telegram-solid",
 };
 
+export const revalidate = 0;
+
 async function Footer() {
   const preferences = await getPrefs();
 
@@ -45,11 +47,13 @@ async function Footer() {
                   {section.label}
                 </h3>
                 <ul className="flex flex-col text-neutral-600 gap-2">
-                  {section.links.map(([label, link]) => (
-                    <li key={label}>
-                      <Link href={link}>{label}</Link>
-                    </li>
-                  ))}
+                  {section.links.map(([label, link]) => {
+                    return (
+                      <li key={label}>
+                        <Link href={link}>{label}</Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}

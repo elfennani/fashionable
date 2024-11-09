@@ -98,10 +98,8 @@ const OrderingContent = () => {
       },
     });
 
-    console.log(res.status);
-
     if (res.status != 200) {
-      console.log(await res.json());
+      console.error(await res.json());
     }
   };
 

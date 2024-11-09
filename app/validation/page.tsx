@@ -1,4 +1,3 @@
-"use client";
 import PageHeader from "@/components/page-header";
 import OrderingContent from "@/features/ordering/components/ordering-content";
 import { Metadata, NextPage } from "next";

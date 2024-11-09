@@ -70,7 +70,6 @@ const ContactForm = () => {
 
       if (res.status != 204) {
         const error = await res.json();
-        console.log(error);
         throw new Error(JSON.stringify(error));
       }
     },

@@ -39,7 +39,6 @@ const FilteredProductsList = () => {
 
         if (filter.search?.trim()) {
           const query = "'" + filter.search.split(" ").join("' | '") + "'";
-          console.log(query);
           request = request.textSearch("name", query, {});
         }
 
