@@ -65,7 +65,7 @@ const FilteredProductsList = () => {
         );
       }
 
-      if (filter.category) {
+      if (filter.category && filter.category >= 0) {
         p = p.filter((product) => product.category_id == filter.category);
       }
 

@@ -28,10 +28,12 @@ const BoutiqueFilters = ({ className }: { className?: string }) => {
       <h2 className="text-lg font-semibold">Catégories</h2>
       <ul className="flex flex-col gap-1">
         <button
-          onClick={() => setFilter("category", undefined)}
+          onClick={() => setFilter("category", -1)}
           className={cn(
             "flex justify-between items-center opacity-50 text-sm py-1",
-            !filters.category && "font-semibold text-rose-400 opacity-100"
+            !filters.category ||
+              (filters.category === -1 &&
+                "font-semibold text-rose-400 opacity-100")
           )}
         >
           Tous les produit <span>{totalProductsCount}</span>
