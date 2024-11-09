@@ -5,12 +5,12 @@ import getCartItems from "../utils/get-cart-items";
 import setCartItems from "../utils/set-cart-items";
 
 const useCartUpdate = (productId: number) => {
-  const timeout = useRef<NodeJS.Timeout>();
+  const timeout = useRef<NodeJS.Timeout>(null);
 
   return (item: CartItem) => {
     if (timeout.current) {
       clearTimeout(timeout.current);
-      timeout.current = undefined;
+      timeout.current = null;
     }
 
     const items = getCartItems();

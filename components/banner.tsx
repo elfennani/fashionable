@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { Database } from "@/types/database.types";
 import Link from "next/link";
@@ -38,20 +38,23 @@ export default function Banner({ banners, collections }: Props) {
   const [[page, direction], setIndex] = useState([0, 0]);
   const autoPagination = useRef<NodeJS.Timeout | null | false>(null);
 
-  const increment = (shouldStop = true) => {
-    if (shouldStop && autoPagination.current) {
-      clearInterval(autoPagination.current);
-      autoPagination.current = false;
-    }
-
-    setIndex((index) => {
-      if (index[0] == banners.length - 1) {
-        return [0, 1];
+  const increment = useCallback(
+    (shouldStop = true) => {
+      if (shouldStop && autoPagination.current) {
+        clearInterval(autoPagination.current);
+        autoPagination.current = false;
       }
 
-      return [index[0] + 1, 1];
-    });
-  };
+      setIndex((index) => {
+        if (index[0] == banners.length - 1) {
+          return [0, 1];
+        }
+
+        return [index[0] + 1, 1];
+      });
+    },
+    [banners.length]
+  );
 
   const decrement = () => {
     if (autoPagination.current) {
@@ -75,7 +78,7 @@ export default function Banner({ banners, collections }: Props) {
         clearInterval(autoPagination.current!);
       }
     };
-  }, []);
+  }, [increment]);
 
   const getDestination = () => {
     const banner = banners[page];

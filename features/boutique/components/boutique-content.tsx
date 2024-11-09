@@ -1,57 +1,14 @@
-import React from "react";
+import BoutiqueFilters from "./boutique-filters";
+import FilteredProductsList from "./filtered-products-list";
+import FiltersButton from "./filters-button";
 import SearchInput from "./search-input";
 import SortingSelect from "./sorting-select";
-import FiltersButton from "./filters-button";
-import FilteredProductsList from "./filtered-products-list";
-import BoutiqueFilterLoader from "./boutique-filter-loader";
-import supabase from "@/utils/supabase";
-import BoutiqueFilters from "./boutique-filters";
 
-const BoutiqueContent = async () => {
-  const { data: categories } = await supabase
-    .rpc("get_categories_unarchived")
-    .throwOnError();
-  const { data: colors } = await supabase.rpc("get_colors").throwOnError();
-  const { data: cheapestProduct } = await supabase
-    .from("product")
-    .select()
-    .eq("archived", false)
-    .order("price", { ascending: true })
-    .limit(1)
-    .single()
-    .throwOnError();
-  const { data: mostExpensiveProduct } = await supabase
-    .from("product")
-    .select()
-    .eq("archived", false)
-    .order("price", { ascending: false })
-    .limit(1)
-    .single()
-    .throwOnError();
-  const { count } = await supabase
-    .from("product")
-    .select("*", { count: "estimated", head: true })
-    .throwOnError();
-
-  if (
-    !categories ||
-    !colors ||
-    !cheapestProduct ||
-    !mostExpensiveProduct ||
-    count == null
-  )
-    throw new Error("Failed to load required info");
-
+const BoutiqueContent = () => {
   return (
     <>
       <div className="max-lg:hidden">
-        <BoutiqueFilters
-          categories={categories}
-          colors={colors}
-          minPrice={cheapestProduct.price}
-          maxPrice={mostExpensiveProduct.price}
-          maxProducts={count}
-        />
+        <BoutiqueFilters />
       </div>
       <div className="flex flex-col gap-6 lg:gap-12">
         <div className="flex max-lg:flex-col-reverse gap-4 lg:gap-6 lg:items-center">
@@ -64,13 +21,7 @@ const BoutiqueContent = async () => {
             </label>
             <SortingSelect />
             <div className="h-4/5 w-px bg-neutral-200" />
-            <FiltersButton
-              categories={categories}
-              colors={colors}
-              minPrice={cheapestProduct.price}
-              maxPrice={mostExpensiveProduct.price}
-              maxProducts={count}
-            />
+            <FiltersButton />
           </div>
         </div>
         <FilteredProductsList />

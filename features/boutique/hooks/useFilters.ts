@@ -21,6 +21,7 @@ const useFilters = () => {
     set("color");
     set("min");
     set("max");
+    set("page");
 
     if (
       params.has("sort") &&

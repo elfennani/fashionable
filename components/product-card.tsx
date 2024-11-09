@@ -43,11 +43,11 @@ function ProductCard({ product }: Props) {
             </h3>
             <p>
               <span className="text-sm md:text-lg text-rose-400 tracking-tight mr-2">
-                {product.price} MAD
+                {product.price.toFixed(2)} MAD
               </span>
               {product.base_price && (
                 <span className="text-neutral-400 line-through max-md:text-xs">
-                  {product.base_price} MAD
+                  {product.base_price.toFixed(2)} MAD
                 </span>
               )}
             </p>
