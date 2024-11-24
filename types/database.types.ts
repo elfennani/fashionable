@@ -233,10 +233,13 @@ export type Database = {
           last_name: string
           phone: string
           postal_code: string
+          products_total: number
+          promo_code: string | null
+          promo_value: number | null
           province: string
           shipping_fee: number
           status: string
-          total_amount: number
+          total: number
           updated_at: string
         }
         Insert: {
@@ -250,10 +253,13 @@ export type Database = {
           last_name: string
           phone: string
           postal_code: string
+          products_total: number
+          promo_code?: string | null
+          promo_value?: number | null
           province: string
           shipping_fee: number
           status: string
-          total_amount: number
+          total: number
           updated_at?: string
         }
         Update: {
@@ -267,10 +273,13 @@ export type Database = {
           last_name?: string
           phone?: string
           postal_code?: string
+          products_total?: number
+          promo_code?: string | null
+          promo_value?: number | null
           province?: string
           shipping_fee?: number
           status?: string
-          total_amount?: number
+          total?: number
           updated_at?: string
         }
         Relationships: []
