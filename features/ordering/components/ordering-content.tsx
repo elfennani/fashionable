@@ -2,6 +2,15 @@
 import Container from "@/components/container";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
   Form,
   FormControl,
   FormField,
@@ -22,10 +31,13 @@ import cities from "@/features/ordering/morocco_cities.json";
 import useShoppingCart from "@/features/shopping-cart/hooks/use-shopping-cart";
 import getCartItems from "@/features/shopping-cart/utils/get-cart-items";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import validator from "validator";
 import { z } from "zod";
 import OrderSummary from "./order-summary";
+import { useRouter } from "next/navigation";
+import setCartItems from "@/features/shopping-cart/utils/set-cart-items";
 
 const formSchema = z.object({
   first_name: z
@@ -41,12 +53,8 @@ const formSchema = z.object({
     .email({ message: "E-mail est invalid" }),
   postal_code: z.number({ coerce: true }).optional(),
   phone: z
-    .number({
-      coerce: true,
-      invalid_type_error: "Téléphone doit être un numero",
-      required_error: "Téléphone est obligatoire",
-    })
-    .min(5, { message: "5 numero minimum " }),
+    .string({ required_error: "Téléphone est obligatoire" })
+    .refine(validator.isMobilePhone, { message: "Téléphone invalide" }),
   address: z
     .string({ required_error: "Address est obligatoire" })
     .min(10, { message: "10 lettre minimum" })
@@ -62,7 +70,9 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const OrderingContent = () => {
+  const [errorAlert, setErrorAlert] = useState(false);
   const { data: products, isPending, isError, error } = useShoppingCart();
+  const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
   });
@@ -101,7 +111,12 @@ const OrderingContent = () => {
 
     if (res.status != 200) {
       console.error(await res.json());
+      setErrorAlert(true);
+      return;
     }
+
+    setCartItems([]);
+    router.replace("/");
   };
 
   useEffect(() => {
@@ -136,6 +151,24 @@ const OrderingContent = () => {
       <div className="flex flex-col gap-4">
         <h1>Coordonnées</h1>
         <hr className="border-neutral-200" />
+
+        <AlertDialog open={errorAlert} onOpenChange={setErrorAlert}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                Échec de l&apos;envoi de la commande
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                Une erreur inattendue s&apos;est produite lors de l&apos;envoi
+                de la commande. Veuillez réessayer ou vérifier les informations
+                saisies.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Ok</AlertDialogCancel>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         <Form {...form}>
           <form
