@@ -66,7 +66,7 @@ const OrderSummary = ({
 
     let taxFree = Number(prefs["tax-free"]);
 
-    if (isNaN(taxFree)) taxFree = Infinity;
+    if (isNaN(taxFree) || taxFree === 0) taxFree = Infinity;
 
     if (subtotal > taxFree) {
       return 0;
