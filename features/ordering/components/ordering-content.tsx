@@ -1,5 +1,4 @@
 "use client";
-import Button from "@/components/button";
 import Container from "@/components/container";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
@@ -11,13 +10,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Skeleton } from "@/components/ui/skeleton";
-import useShoppingCart from "@/features/shopping-cart/hooks/use-shopping-cart";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import cities from "@/features/ordering/morocco_cities.json";
 import {
   Select,
   SelectContent,
@@ -25,7 +17,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import cities from "@/features/ordering/morocco_cities.json";
+import useShoppingCart from "@/features/shopping-cart/hooks/use-shopping-cart";
 import getCartItems from "@/features/shopping-cart/utils/get-cart-items";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import OrderSummary from "./order-summary";
 
 const formSchema = z.object({
   first_name: z
@@ -56,6 +56,7 @@ const formSchema = z.object({
     .string({ required_error: "Ville est obligatoire" })
     .min(2, { message: "2 lettre minimum" })
     .max(50, { message: "50 lettre maximum" }),
+  promocode: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -102,13 +103,6 @@ const OrderingContent = () => {
       console.error(await res.json());
     }
   };
-
-  const subtotal = useMemo(
-    () =>
-      products?.reduce((prev, curr) => prev + curr.price * curr.quantity, 0) ??
-      0,
-    [products]
-  );
 
   useEffect(() => {
     if (isError) {
@@ -301,36 +295,29 @@ const OrderingContent = () => {
                 )}
               />
             </div>
+            <FormField
+              control={form.control}
+              name="promocode"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Code de promotion</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Saisir votre code promo" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </form>
         </Form>
       </div>
-      <div className="p-6 gap-6 bg-rose-50 flex flex-col">
-        <div className="flex flex-col gap-4">
-          <div className="flex justify-between items-center gap-4">
-            <h3 className="text-xs uppercase">Sous-total</h3>
-            <p className="font-bold">{subtotal} MAD</p>
-          </div>
-          <div className="flex justify-between items-center gap-4">
-            <h3 className="text-xs uppercase">LIVRAISON</h3>
-            <p className="font-bold">47 MAD</p>
-          </div>
-        </div>
-        <hr className="border-neutral-200" />
-        <div className="flex justify-between items-center gap-4">
-          <h3 className="text-xl sm:text-2xl font-bold uppercase">TOTAL</h3>
-          <p className="font-light text-rose-400 text-4xl sm:text-5xl tracking-tighter">
-            {subtotal + 47} MAD
-          </p>
-        </div>
-        <Button
-          form="validation-form"
-          type="submit"
-          disabled={form.formState.isSubmitting}
-        >
-          Commander
-          <span className="iconify teenyicons--send-outline size-6" />
-        </Button>
-      </div>
+      <OrderSummary
+        products={products ?? []}
+        disabled={form.formState.isSubmitting}
+        city={form.watch("city")}
+        province={form.watch("province")}
+        promocode={form.watch("promocode")}
+      />
     </Container>
   );
 };

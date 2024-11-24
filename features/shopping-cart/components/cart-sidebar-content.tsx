@@ -110,25 +110,11 @@ const CartSidebarContent = () => {
       ))}
       {products.length != 0 && (
         <footer>
-          <div className="space-y-1 py-4 border-border border-y">
-            <div className="flex items-baseline justify-between">
-              <h4 className="uppercase text-muted-foreground text-xs">
-                Sous-total
-              </h4>
-              <p className="font-bold">{subtotal} MAD</p>
-            </div>
-            <div className="flex items-baseline justify-between">
-              <h4 className="uppercase text-muted-foreground text-xs">
-                Livraison + TVA
-              </h4>
-              <p className="font-bold">47 MAD</p>
-            </div>
-          </div>
           <div className="space-y-4 py-4 border-border border-t">
             <div className="flex items-center justify-between gap-2">
-              <h4 className="uppercase text-lg sm:text-2xl">total</h4>
+              <h4 className="uppercase text-lg sm:text-2xl">Sous-total</h4>
               <p className="font-light text-rose-400 text-2xl sm:text-4xl tracking-tighter">
-                {subtotal + 47} MAD
+                {subtotal} MAD
               </p>
             </div>
             <SheetClose asChild>

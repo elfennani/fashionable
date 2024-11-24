@@ -401,6 +401,45 @@ export type Database = {
           },
         ]
       }
+      promotions: {
+        Row: {
+          active: boolean
+          code: string
+          created_at: string
+          id: number
+          limit_uses: number | null
+          max_cut: number | null
+          min_order_total: number | null
+          type: string
+          uses: number
+          value: number
+        }
+        Insert: {
+          active?: boolean
+          code: string
+          created_at?: string
+          id?: number
+          limit_uses?: number | null
+          max_cut?: number | null
+          min_order_total?: number | null
+          type: string
+          uses: number
+          value: number
+        }
+        Update: {
+          active?: boolean
+          code?: string
+          created_at?: string
+          id?: number
+          limit_uses?: number | null
+          max_cut?: number | null
+          min_order_total?: number | null
+          type?: string
+          uses?: number
+          value?: number
+        }
+        Relationships: []
+      }
       slideshow: {
         Row: {
           button_label: string

@@ -55,7 +55,7 @@ export default async function RootLayout({
         <NuqsAdapter>
           <NextTopLoader color={colors.pink[400]} showSpinner={false} />
           <NavHeader logo={prefs.logo} title={prefs.title} />
-          <Providers>{children}</Providers>
+          <Providers prefs={prefs}>{children}</Providers>
           <Footer />
         </NuqsAdapter>
       </body>
