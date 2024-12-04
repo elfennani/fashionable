@@ -350,6 +350,7 @@ export type Database = {
           name: string
           orders: number
           price: number
+          shoe_size: number | null
           size: string | null
           status: string
           stock: number | null
@@ -369,6 +370,7 @@ export type Database = {
           name: string
           orders?: number
           price: number
+          shoe_size?: number | null
           size?: string | null
           status: string
           stock?: number | null
@@ -388,6 +390,7 @@ export type Database = {
           name?: string
           orders?: number
           price?: number
+          shoe_size?: number | null
           size?: string | null
           status?: string
           stock?: number | null
