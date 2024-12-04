@@ -13,12 +13,23 @@ const ProductInfoFooter = ({ product }: Props) => {
 
   return (
     <>
-      <div className="flex gap-10">
+      <div className="flex gap-10 flex-wrap">
         {product.size && (
           <div className="flex flex-col gap-2">
             <p className="font-semibold tracking-tight uppercase">Taille</p>
-            <p className="px-6 py-4 border border-neutral-200">
+            <p className="px-6 py-4 border border-neutral-200 text-center">
               {product.size}
+            </p>
+          </div>
+        )}
+        {product.shoe_size && (
+          <div className="flex flex-col gap-2">
+            <p className="font-semibold tracking-tight uppercase">Pointure</p>
+            <p className="px-6 py-4 border border-neutral-200 text-center">
+              EUR{" "}
+              <span className="text-rose-400 text-lg font-bold">
+                {product.shoe_size}
+              </span>
             </p>
           </div>
         )}
