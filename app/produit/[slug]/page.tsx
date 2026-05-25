@@ -11,6 +11,13 @@ import {Metadata, NextPage} from "next";
 import Link from "next/link";
 import {cn} from "@/utils/cn";
 
+interface Variant {
+  id: number;
+  name: string;
+  ugs: string;
+  images: Array<{ url: string; id: number }> | null;
+}
+
 interface Props {
     params: Promise<{ slug: string }>;
 }
@@ -75,7 +82,7 @@ const Page: NextPage<Props> = async (props) => {
     if (similarProducts.error) return <div>{similarProducts.error.message}</div>;
 
     // Fetch variants: products that share the same grouping
-    let variantsData: any[] = [];
+    let variantsData: Variant[] = [];
     if (data.grouping_id) {
         const variants = await supabase
             .from("product")
