@@ -38,20 +38,53 @@ const BoutiqueFilters = ({ className }: { className?: string }) => {
         >
           Tous les produit <span>{totalProductsCount}</span>
         </button>
-        {categories.map((category) => (
-          <li key={category.id}>
-            <button
-              onClick={() => setFilter("category", category.id)}
-              className={cn(
-                "flex w-full justify-between items-baseline opacity-50 text-sm py-1",
-                filters.category == category.id &&
-                  "font-semibold text-amber-600 opacity-100"
-              )}
-            >
-              {category.name} <span>{category.reference_count}</span>
-            </button>
-          </li>
-        ))}
+        {categories
+          .filter((c) => !c.category_id)
+          .map((category) => {
+            const subCategories = categories.filter(
+              (c) => c.category_id === category.id
+            );
+            const isSelected = filters.category == category.id;
+            const isSubSelected = subCategories.some(
+              (c) => c.id === filters.category
+            );
+            const totalCount =
+              category.reference_count +
+              subCategories.reduce((acc, sub) => acc + sub.reference_count, 0);
+
+            return (
+              <li key={category.id} className="flex flex-col">
+                <button
+                  onClick={() => setFilter("category", category.id)}
+                  className={cn(
+                    "flex w-full justify-between items-baseline opacity-50 text-sm py-1",
+                    (isSelected || isSubSelected) && "opacity-100",
+                    isSelected && "font-semibold text-amber-600"
+                  )}
+                >
+                  {category.name} <span>{totalCount}</span>
+                </button>
+                {subCategories.length > 0 && (
+                  <ul className="flex flex-col gap-1 ml-4 border-l border-neutral-200 pl-4">
+                    {subCategories.map((sub) => (
+                      <li key={sub.id}>
+                        <button
+                          onClick={() => setFilter("category", sub.id)}
+                          className={cn(
+                            "flex w-full justify-between items-baseline opacity-50 text-xs py-1",
+                            filters.category == sub.id &&
+                              "font-semibold text-amber-600 opacity-100"
+                          )}
+                        >
+                          {sub.name} <span>{sub.reference_count}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
       </ul>
       <hr className="border-neutral-200 mx-4" />
       <h2 className="text-lg font-semibold capitalize">filtrer par</h2>

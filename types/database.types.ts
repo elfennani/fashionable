@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       category: {
         Row: {
+          category_id: number | null
           created_at: string
           id: number
           image: string
@@ -23,6 +24,7 @@ export type Database = {
           name: string
         }
         Insert: {
+          category_id?: number | null
           created_at?: string
           id?: number
           image: string
@@ -30,13 +32,22 @@ export type Database = {
           name: string
         }
         Update: {
+          category_id?: number | null
           created_at?: string
           id?: number
           image?: string
           image_filename?: string
           name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "category_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "category"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       collection_items: {
         Row: {
@@ -565,6 +576,7 @@ export type Database = {
       get_categories: {
         Args: never
         Returns: {
+          category_id: number | null
           created_at: string
           id: number
           image: string
@@ -576,6 +588,7 @@ export type Database = {
       get_categories_unarchived: {
         Args: never
         Returns: {
+          category_id: number | null
           created_at: string
           id: number
           image: string

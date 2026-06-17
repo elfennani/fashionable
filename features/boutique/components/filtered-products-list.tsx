@@ -4,10 +4,12 @@ import { useEffect, useMemo } from "react";
 import useProductList from "../contexts/product-list-context";
 import useFilters from "../hooks/useFilters";
 import Pagination from "./pagination";
+import { useBoutiqueSettings } from "../contexts/boutique-settings-context";
 
 const FilteredProductsList = () => {
   const [filter, setFilter] = useFilters();
   const products = useProductList();
+  const { categories } = useBoutiqueSettings();
   const filteredProducts = useMemo(() => {
     let p = products;
 
@@ -66,7 +68,11 @@ const FilteredProductsList = () => {
       }
 
       if (filter.category && filter.category >= 0) {
-        p = p.filter((product) => product.category_id == filter.category);
+        const subCategoryIds = categories
+          .filter((c) => c.category_id === filter.category)
+          .map((c) => c.id);
+        const categoryIds = [filter.category, ...subCategoryIds];
+        p = p.filter((product) => categoryIds.includes(product.category_id));
       }
 
       if (filter.color) {

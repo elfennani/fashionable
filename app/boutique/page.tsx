@@ -17,10 +17,16 @@ export const metadata: Metadata = {
 };
 
 const Boutique: NextPage<Props> = async ({}) => {
-  const { data: categories } = await supabase
-    .rpc("get_categories_unarchived")
+  const { data: categoriesData } = await supabase
+    .from("category")
+    .select("*")
+    .order("name")
     .throwOnError();
-  const { data: colors } = await supabase.rpc("get_colors").throwOnError();
+  const { data: colorsData } = await supabase
+    .from("color")
+    .select("*")
+    .order("name")
+    .throwOnError();
   const { data: cheapestProduct } = await supabase
     .from("product")
     .select()
@@ -40,22 +46,38 @@ const Boutique: NextPage<Props> = async ({}) => {
   const { count } = await supabase
     .from("product")
     .select("*", { count: "estimated", head: true })
+    .eq("archived", false)
     .throwOnError();
 
-  const { data: products, error: productsError } = await supabase
+  const { data: productsData, error: productsError } = await supabase
     .from("product")
     .select("*, images ( * ), category!inner(*), popularity:order_items(count)")
     .eq("archived", false);
 
   if (
-    !categories ||
-    !colors ||
+    !categoriesData ||
+    !colorsData ||
     !cheapestProduct ||
     !mostExpensiveProduct ||
     productsError ||
     count == null
   )
     throw new Error("Failed to load required info");
+
+  const products = productsData.map((p) => ({
+    ...p,
+    popularity: p.popularity[0].count,
+  }));
+
+  const categories = categoriesData.map((cat) => ({
+    ...cat,
+    reference_count: products.filter((p) => p.category_id === cat.id).length,
+  }));
+
+  const colors = colorsData.map((col) => ({
+    ...col,
+    reference_count: products.filter((p) => p.color_id === col.id).length,
+  }));
 
   const settings = {
     categories,
@@ -69,12 +91,7 @@ const Boutique: NextPage<Props> = async ({}) => {
 
   return (
     <BoutiqueSettingsProvider settings={settings}>
-      <ProductListProvider
-        products={products.map((p) => ({
-          ...p,
-          popularity: p.popularity[0].count,
-        }))}
-      >
+      <ProductListProvider products={products}>
         <main>
           <PageHeader
             iconClassname="teenyicons--shop-outline"

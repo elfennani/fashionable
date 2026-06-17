@@ -5,4 +5,5 @@ export default interface Category {
   image: string;
   image_filename: string;
   reference_count: number;
+  category_id: number | null;
 }
