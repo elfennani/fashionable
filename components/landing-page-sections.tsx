@@ -76,7 +76,10 @@ const LandingPageSection = async ({ section }: Props) => {
     return (
       <Container className="py-8 max-md:px-4 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full capitalize">{title}</SectionTitle>
-        <AnimatedProductList products={data} />
+        <AnimatedProductList
+          products={data}
+          size={section.limit % 4 == 0 ? "small" : "normal"}
+        />
         {buttonIncluded && (
           <LinkButton
             to={`/boutique?${params.toString()}`}

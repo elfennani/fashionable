@@ -3,11 +3,13 @@ import { Product } from "@/types/Product";
 import React from "react";
 import { motion } from "framer-motion";
 import ProductCard from "./product-card";
+import { cn } from "@/utils/cn";
 
 type Props = {
   products: Product[];
   delay?: number;
   stagger?: number;
+  size?: "normal" | "small";
 };
 
 const item = {
@@ -21,6 +23,7 @@ const item = {
 const AnimatedProductList = ({
   delay = 0.2,
   stagger = 0.15,
+  size = "normal",
   products,
 }: Props) => {
   const container = {
@@ -40,7 +43,10 @@ const AnimatedProductList = ({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
-      className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8"
+      className={cn(
+        "grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8",
+        size === "small" && "md:grid-cols-4 md:gap-4",
+      )}
     >
       {products.map((product) => (
         <motion.div key={product.id} variants={item}>
