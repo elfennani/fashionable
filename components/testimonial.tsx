@@ -17,7 +17,7 @@ function Testimonial(props: Props) {
           .fill("")
           .map((_, index) => (
             <span
-              className="iconify teenyicons--star-solid size-4 text-rose-400"
+              className="iconify teenyicons--star-solid size-4 text-amber-600"
               key={index}
             />
           ))}

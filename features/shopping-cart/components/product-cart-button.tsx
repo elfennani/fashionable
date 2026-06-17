@@ -39,9 +39,9 @@ const ProductCartButton = ({
     <button
       onClick={toggle}
       className={cn(
-        "flex absolute bottom-0 right-0 md:w-full max-md:self-end translate-y-full font-semibold group-hover:translate-y-0 transition-all items-center justify-center p-4 md:px-8 md:py-5 gap-6 uppercase tracking-wider bg-rose-50 md:bg-rose-400 hover:bg-rose-100 hover:md:bg-rose-500 text-rose-400 md:text-rose-50",
+        "flex absolute bottom-0 right-0 md:w-full max-md:self-end translate-y-full font-semibold group-hover:translate-y-0 transition-all items-center justify-center p-4 md:px-8 md:py-5 gap-6 uppercase tracking-wider bg-amber-50 md:bg-amber-600 hover:bg-amber-100 hover:md:bg-amber-500 text-amber-600 md:text-amber-50",
         isInCart &&
-          "text-rose-50 bg-rose-400 hover:bg-rose-500 md:bg-rose-50 hover:md:bg-rose-100 md:text-rose-400"
+          "text-amber-50 bg-amber-600 hover:bg-amber-500 md:bg-amber-50 hover:md:bg-amber-100 md:text-amber-600"
       )}
     >
       <span

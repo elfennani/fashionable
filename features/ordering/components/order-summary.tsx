@@ -120,7 +120,7 @@ const OrderSummary = ({
   return (
     <div
       className={cn(
-        "p-6 gap-6 bg-rose-50 flex flex-col",
+        "p-6 gap-6 bg-amber-50 flex flex-col",
         isPending && !!promocode && "opacity-50"
       )}
     >
@@ -148,7 +148,7 @@ const OrderSummary = ({
             <sup className="text-xs opacity-75">(avec promotion)</sup>
           )}
         </h3>
-        <p className="font-light text-rose-400 text-4xl sm:text-5xl tracking-tighter">
+        <p className="font-light text-amber-600 text-4xl sm:text-5xl tracking-tighter">
           {tax === -1 ? ".." : total} MAD
         </p>
       </div>

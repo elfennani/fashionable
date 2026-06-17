@@ -22,7 +22,7 @@ const CartQuantityInput = ({ productId }: { productId: number }) => {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", bounce: 0.3, duration: 0.2 }}
-          className="font-semibold text-rose-400"
+          className="font-semibold text-amber-600"
         >
           {quantity ?? 0}
         </motion.span>{" "}

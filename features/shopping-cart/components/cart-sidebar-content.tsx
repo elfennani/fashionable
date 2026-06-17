@@ -113,7 +113,7 @@ const CartSidebarContent = () => {
           <div className="space-y-4 py-4 border-border border-t">
             <div className="flex items-center justify-between gap-2">
               <h4 className="uppercase text-lg sm:text-2xl">Sous-total</h4>
-              <p className="font-light text-rose-400 text-2xl sm:text-4xl tracking-tighter">
+              <p className="font-light text-amber-600 text-2xl sm:text-4xl tracking-tighter">
                 {subtotal} MAD
               </p>
             </div>

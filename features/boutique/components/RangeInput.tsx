@@ -74,16 +74,16 @@ const RangeInput: React.FC<Props> = ({
           <div
             {...props}
             key={props.key}
-            className={cn("w-1 h-4 bg-neutral-700", isDragged && "bg-rose-500")}
+            className={cn("w-1 h-4 bg-neutral-700", isDragged && "bg-amber-500")}
           />
         )}
       />
       <output className="mt-2" id="output">
-        <span className="text-rose-400 font-semibold">
+        <span className="text-amber-600 font-semibold">
           {values[0].toFixed(1)} MAD
         </span>{" "}
         à{" "}
-        <span className="text-rose-400 font-semibold">
+        <span className="text-amber-600 font-semibold">
           {values[1].toFixed(1)} MAD
         </span>
       </output>

@@ -165,7 +165,7 @@ export default function Banner({ banners, collections }: Props) {
 
         <Link
           href={getDestination()}
-          className="bg-white relative after:block after:absolute after:bg-rose-100 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:w-full after:transition-transform after:top-0 after:left-0 after:bottom-0 px-6 md:px-16 py-6 text-rose-400 flex tracking-wider uppercase items-center justify-center gap-4 sm:gap-6 transition-colors"
+          className="bg-white relative after:block after:absolute after:bg-amber-100 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:w-full after:transition-transform after:top-0 after:left-0 after:bottom-0 px-6 md:px-16 py-6 text-amber-600 flex tracking-wider uppercase items-center justify-center gap-4 sm:gap-6 transition-colors"
         >
           <AnimatePresence initial={false}>
             <motion.span
