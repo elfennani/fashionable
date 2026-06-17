@@ -17,7 +17,7 @@ const WishlistButton = ({ productId }: Props) => {
       onClick={toggle}
       className={cn(
         "flex items-center max-md:self-center gap-4 uppercase hover:underline py-4 underline-offset-4",
-        isWishlisted && "text-rose-400 font-bold"
+        isWishlisted && "text-amber-600 font-bold"
       )}
     >
       <span

@@ -59,14 +59,14 @@ export default function CartSidebar({ onClose }: Props) {
 
           <div className="flex justify-between items-center">
             <h4 className="text-lg lg:text-2xl font-bold">TOTAL</h4>
-            <p className="font-light text-2xl lg:text-4xl text-rose-400">
+            <p className="font-light text-2xl lg:text-4xl text-amber-600">
               554.99 MAD
             </p>
           </div>
 
           <button
             onClick={navigateToValidation}
-            className="bg-rose-400 text-rose-50 uppercase flex px-8 py-4 lg:py-5 tracking-wide shadow-lg shadow-rose-100 font-semibold gap-6 items-center justify-center hover:bg-rose-500 transition-colors duration-200"
+            className="bg-amber-600 text-amber-50 uppercase flex px-8 py-4 lg:py-5 tracking-wide shadow-lg shadow-amber-100 font-semibold gap-6 items-center justify-center hover:bg-amber-500 transition-colors duration-200"
           >
             procéder
             <span className="iconify teenyicons--arrow-right-solid size-6" />

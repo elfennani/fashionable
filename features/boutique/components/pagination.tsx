@@ -40,7 +40,7 @@ const Pagination = ({ maxPages }: Props) => {
             href={`/boutique?${paramsString(i)}#content`}
             className={cn(
               "text-2xl px-3 py-2 font-light text-neutral-400 hover:text-neutral-700 transition-colors",
-              i == page - 1 && "font-bold text-rose-400 hover:text-rose-600"
+              i == page - 1 && "font-bold text-amber-600 hover:text-amber-600"
             )}
             onClick={(e) => {
               e.preventDefault();

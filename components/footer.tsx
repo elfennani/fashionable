@@ -28,7 +28,7 @@ async function Footer() {
 
   return (
     <footer>
-      <div className="bg-rose-50">
+      <div className="bg-amber-50">
         <Container className="py-16 px-8 flex flex-col gap-8 md:flex-row items-start justify-between">
           <div className="md:max-w-96">
             <Link href="/">
@@ -65,7 +65,7 @@ async function Footer() {
                 <li>
                   <Link href="#">
                     Téléphone:{" "}
-                    <span className="text-rose-400 font-semibold">
+                    <span className="text-amber-600 font-semibold">
                       {preferences.phone}
                     </span>
                   </Link>
@@ -73,7 +73,7 @@ async function Footer() {
                 <li>
                   <Link href="#">
                     Email:{" "}
-                    <span className="text-rose-400 font-semibold">
+                    <span className="text-amber-600 font-semibold">
                       {preferences.email}
                     </span>
                   </Link>
@@ -83,7 +83,7 @@ async function Footer() {
           </div>
         </Container>
       </div>
-      <div className="bg-rose-400 text-rose-50">
+      <div className="bg-amber-600 text-amber-50">
         <Container className="py-6 sm:py-8 px-8 flex gap-4 max-sm:flex-col items-center sm:justify-between">
           <ul className="flex items-center gap-8">
             {preferences["social-links"].map((link) => (
@@ -99,7 +99,7 @@ async function Footer() {
               </li>
             ))}
           </ul>
-          <p className="font-medium capitalize text-rose-100">
+          <p className="font-medium capitalize text-amber-100">
             2024 {preferences.title} - All Rights Reserved
           </p>
         </Container>

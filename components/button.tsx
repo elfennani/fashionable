@@ -23,10 +23,10 @@ const Button = ({
   return (
     <button
       className={cn(
-        "bg-rose-400 px-8 md:px-16 py-5 text-rose-50 disabled:bg-neutral-400 disabled:text-neutral-50 flex tracking-widest font-semibold uppercase items-center justify-center gap-4 sm:gap-6 transition-colors hover:bg-rose-500",
+        "bg-amber-600 px-8 md:px-16 py-5 text-amber-50 disabled:bg-neutral-400 disabled:text-neutral-50 flex tracking-widest font-semibold uppercase items-center justify-center gap-4 sm:gap-6 transition-colors hover:bg-amber-500",
         secondary &&
-          "bg-rose-50 hover:bg-rose-100 text-rose-400 hover:text-rose-500",
-        shadow && "shadow-lg shadow-rose-100",
+          "bg-amber-50 hover:bg-amber-100 text-amber-600 hover:text-amber-500",
+        shadow && "shadow-lg shadow-amber-100",
         className
       )}
       {...props}
@@ -50,10 +50,10 @@ export const LinkButton = ({
     <Link
       href={to}
       className={cn(
-        "bg-rose-400 px-8 md:px-16 py-5 text-rose-50 flex tracking-widest font-semibold uppercase items-center justify-center gap-4 sm:gap-6 transition-colors hover:bg-rose-500",
+        "bg-amber-600 px-8 md:px-16 py-5 text-amber-50 flex tracking-widest font-semibold uppercase items-center justify-center gap-4 sm:gap-6 transition-colors hover:bg-amber-500",
         secondary &&
-          "bg-rose-50 hover:bg-rose-100 text-rose-400 hover:text-rose-500",
-        shadow && "shadow-lg shadow-rose-100",
+          "bg-amber-50 hover:bg-amber-100 text-amber-600 hover:text-amber-500",
+        shadow && "shadow-lg shadow-amber-100",
         className
       )}
       {...props}

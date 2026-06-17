@@ -63,7 +63,7 @@ const ContactInfo = (props: ContactInfoProps) => (
       props.className
     )}
   >
-    <div className="p-4 flex border border-rose-400 text-rose-400 rounded-full">
+    <div className="p-4 flex border border-amber-600 text-amber-600 rounded-full">
       <span className={cn("iconify size-6", props.iconClassName)} />
     </div>
     <div className="flex-1">

@@ -49,7 +49,7 @@ const CounterInput = ({ max, onChange }: Props) => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", bounce: 0.3, duration: 0.2 }}
-            className="font-semibold text-rose-400 text-xl"
+            className="font-semibold text-amber-600 text-xl"
           >
             {counter}
           </motion.span>

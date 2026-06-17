@@ -150,7 +150,7 @@ const LandingPageSection = async ({ section }: Props) => {
     if (error) throw error;
 
     return (
-      <div className="bg-rose-50">
+      <div className="bg-amber-50">
         <Container className="p-4 md:p-8 flex gap-8 md:gap-8 max-md:flex-col items-stretch">
           <div className="aspect-square overflow-hidden md:w-2/5">
             <img

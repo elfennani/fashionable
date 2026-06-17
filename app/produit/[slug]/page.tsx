@@ -143,7 +143,7 @@ const Page: NextPage<Props> = async (props) => {
                                                 <Link
                                                     href={`/produit/${p.id}`}
                                                     key={p.id}
-                                                    className={`block shrink-0 rounded-md overflow-hidden border ${isCurrent ? "border-rose-500 ring-2 ring-rose-200" : "border-neutral-200"}`}
+                                                    className={`block shrink-0 rounded-md overflow-hidden border ${isCurrent ? "border-amber-500 ring-2 ring-amber-200" : "border-neutral-200"}`}
                                                 >
                                                     <img
                                                         src={img}

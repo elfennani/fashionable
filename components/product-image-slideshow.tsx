@@ -56,7 +56,7 @@ const ProductImageSlideshow = ({ product }: Props) => {
               <TextPill className="bg-green-700">Nouveau</TextPill>
             )}
             {!!product.base_price && (
-              <TextPill className="bg-rose-400">Promo</TextPill>
+              <TextPill className="bg-amber-600">Promo</TextPill>
             )}
           </div>
           <div className="flex gap-4 md:gap-6 items-start p-4 md:p-8">

@@ -20,7 +20,7 @@ function NavItem(props: NavItemProps) {
     <Link
       className={cn(
         "py-1 uppercase border-b-2 border-transparent hover:border-b-gray-700 transition-colors duration-200",
-        isActive && "text-rose-400 border-b-2 !border-b-rose-400"
+        isActive && "text-amber-600 border-b-2 !border-b-amber-600"
       )}
       href={props.href}
     >

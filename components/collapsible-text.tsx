@@ -23,7 +23,7 @@ const CollapsibleText = (props: Props) => {
 
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="font-semibold text-rose-400 leading-loose underline underline-offset-4"
+        className="font-semibold text-amber-600 leading-loose underline underline-offset-4"
       >
         {collapsed ? "Lire Plus" : "Lire Moin"}
       </button>

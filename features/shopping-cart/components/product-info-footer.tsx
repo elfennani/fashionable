@@ -27,7 +27,7 @@ const ProductInfoFooter = ({ product }: Props) => {
             <p className="font-semibold tracking-tight uppercase">Pointure</p>
             <p className="px-6 py-4 border border-neutral-200 text-center">
               EUR{" "}
-              <span className="text-rose-400 text-lg font-bold">
+              <span className="text-amber-600 text-lg font-bold">
                 {product.shoe_size}
               </span>
             </p>
@@ -42,7 +42,7 @@ const ProductInfoFooter = ({ product }: Props) => {
               {product.base_price} MAD
             </p>
           )}
-          <p className="text-4xl font-light text-rose-400 tracking-tighter">
+          <p className="text-4xl font-light text-amber-600 tracking-tighter">
             {product.price} MAD
           </p>
         </div>

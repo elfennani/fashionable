@@ -27,7 +27,7 @@ function ProductCard({ product }: Props) {
                 <TextPill className="bg-green-700">Nouveau</TextPill>
               )}
               {!!product.base_price && (
-                <TextPill className="bg-rose-400">Promo</TextPill>
+                <TextPill className="bg-amber-600">Promo</TextPill>
               )}
             </div>
           </div>
@@ -42,7 +42,7 @@ function ProductCard({ product }: Props) {
               {product.name}
             </h3>
             <p>
-              <span className="text-sm md:text-lg text-rose-400 tracking-tight mr-2">
+              <span className="text-sm md:text-lg text-amber-600 tracking-tight mr-2">
                 {product.price.toFixed(2)} MAD
               </span>
               {product.base_price && (

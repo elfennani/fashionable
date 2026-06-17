@@ -33,7 +33,7 @@ const BoutiqueFilters = ({ className }: { className?: string }) => {
             "flex justify-between items-center opacity-50 text-sm py-1",
             !filters.category ||
               (filters.category === -1 &&
-                "font-semibold text-rose-400 opacity-100")
+                "font-semibold text-amber-600 opacity-100")
           )}
         >
           Tous les produit <span>{totalProductsCount}</span>
@@ -45,7 +45,7 @@ const BoutiqueFilters = ({ className }: { className?: string }) => {
               className={cn(
                 "flex w-full justify-between items-baseline opacity-50 text-sm py-1",
                 filters.category == category.id &&
-                  "font-semibold text-rose-400 opacity-100"
+                  "font-semibold text-amber-600 opacity-100"
               )}
             >
               {category.name} <span>{category.reference_count}</span>
@@ -69,7 +69,7 @@ const BoutiqueFilters = ({ className }: { className?: string }) => {
           <h3 className="font-semibold opacity-80">Colour</h3>
           {filters.color != null && (
             <button
-              className="text-rose-400"
+              className="text-amber-600"
               onClick={() => setFilter("color", undefined)}
             >
               annuler
