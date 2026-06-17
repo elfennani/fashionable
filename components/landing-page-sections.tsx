@@ -29,7 +29,16 @@ const LandingPageSection = async ({ section }: Props) => {
       .limit(limit);
 
     if (category) {
-      request = request.eq("category_id", category.id);
+      const { data: subCategories } = await supabase
+        .from("category")
+        .select("id")
+        .eq("category_id", category.id);
+
+      const categoryIds = [
+        category.id,
+        ...(subCategories?.map((s) => s.id) || []),
+      ];
+      request = request.in("category_id", categoryIds);
     }
 
     if (color) {

@@ -51,14 +51,16 @@ export default async function Home() {
       <Container className="py-8 max-md:px-8 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nos Catégories</SectionTitle>
         <div className="flex flex-wrap gap-8 md:gap-16 md:items-center md:justify-center flex-col md:flex-row">
-          {categories.data.map((category) => (
-            <CategoryCard
-              key={category.id}
-              title={category.name}
-              image={category.image}
-              href={`/boutique?category=${category.id}`}
-            />
-          ))}
+          {categories.data
+            .filter((category) => !category.category_id)
+            .map((category) => (
+              <CategoryCard
+                key={category.id}
+                title={category.name}
+                image={category.image}
+                href={`/boutique?category=${category.id}`}
+              />
+            ))}
         </div>
       </Container>
       {prefs["landing-page-sections"].map((section) => (
