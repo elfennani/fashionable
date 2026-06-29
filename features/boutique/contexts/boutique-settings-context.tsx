@@ -1,10 +1,11 @@
 "use client";
+import Category from "@/types/Category";
 import { Database } from "@/types/database.types";
 import { createContext, ReactNode, useContext } from "react";
 
 interface BoutiqueSettings {
   totalProductsCount: number;
-  categories: Database["public"]["Functions"]["get_categories_unarchived"]["Returns"];
+  categories: Category[];
   colors: Database["public"]["Functions"]["get_colors"]["Returns"];
   priceRange: {
     min: number;
