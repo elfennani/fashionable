@@ -19,10 +19,10 @@ function ProductCard({ product }: Props) {
           <img
             src={product.images[0].url}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform border border-border"
           />
           <div className="absolute top-0 left-0 w-full overflow-hidden h-full flex flex-col justify-between">
-            <div className="p-4 md:p-6 flex flex-col gap-1 md:gap-2 items-end">
+            <div className="p-2 md:p-4 flex flex-col gap-1 md:gap-2 items-end">
               {isProductNew(product) && (
                 <TextPill className="bg-green-700">Nouveau</TextPill>
               )}
@@ -38,15 +38,15 @@ function ProductCard({ product }: Props) {
       <div className="py-2 md:py-4 flex gap-2 items-start">
         <Link href={`/produit/${product.id}`} className="flex-1">
           <div>
-            <h3 className="text-sm md:text-lg lg:text-2xl group-hover:underline underline-offset-4 font-light tracking-tighter">
+            <h3 className="text-sm md:text-base group-hover:underline underline-offset-4 font-light tracking-tighter leading-none">
               {product.name}
             </h3>
             <p>
-              <span className="text-sm md:text-lg text-amber-600 tracking-tight mr-2">
+              <span className="text-sm text-amber-600 tracking-tight mr-2">
                 {product.price.toFixed(2)} MAD
               </span>
               {product.base_price && (
-                <span className="text-neutral-400 line-through max-md:text-xs">
+                <span className="text-neutral-400 line-through text-xs">
                   {product.base_price.toFixed(2)} MAD
                 </span>
               )}

@@ -3,7 +3,7 @@ import ProductList from "@/components/product-list";
 import { useEffect, useMemo } from "react";
 import useProductList from "../contexts/product-list-context";
 import useFilters from "../hooks/useFilters";
-import Pagination from "./pagination";
+import LoadMore from "./load-more";
 import { useBoutiqueSettings } from "../contexts/boutique-settings-context";
 
 const FilteredProductsList = () => {
@@ -92,22 +92,28 @@ const FilteredProductsList = () => {
   }, [products, filter]);
 
   const pagedProducts = useMemo(() => {
-    const page = Math.max((filter.page ?? 1) - 1, 0);
-    return filteredProducts.slice(page * 6, page * 6 + 6);
+    const page = filter.page ?? 1;
+    return filteredProducts.slice(0, page * 24);
   }, [filteredProducts, filter]);
 
   useEffect(() => {
-    const maxPages = Math.ceil(filteredProducts.length / 6);
-
-    if ((filter.page ?? 1) > maxPages) {
-      setFilter("page", maxPages);
+    // Reset page to 1 when filters change (except for page)
+    if (filter.page && filter.page > 1) {
+      setFilter("page", 1);
     }
-  }, [filter, filteredProducts, setFilter]);
+  }, [
+    filter.category,
+    filter.color,
+    filter.min,
+    filter.max,
+    filter.search,
+    filter.sort,
+  ]);
 
   return (
     <>
       <ProductList products={pagedProducts} />
-      <Pagination maxPages={Math.ceil(filteredProducts.length / 6)} />
+      <LoadMore maxPages={Math.ceil(filteredProducts.length / 6)} />
     </>
   );
 };

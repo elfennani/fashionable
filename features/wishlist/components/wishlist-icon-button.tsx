@@ -14,9 +14,9 @@ const WishlistIconButton = ({ productId }: Props) => {
   return (
     <button onClick={toggle} className="mt-1 ">
       {isWishlisted == true ? (
-        <span className="iconify teenyicons--heart-solid text-amber-600 size-4 md:size-6" />
+        <span className="iconify teenyicons--heart-solid text-amber-600 size-4" />
       ) : (
-        <span className="iconify teenyicons--heart-outline size-4 md:size-6 text-neutral-400" />
+        <span className="iconify teenyicons--heart-outline size-4 text-neutral-400" />
       )}
     </button>
   );
