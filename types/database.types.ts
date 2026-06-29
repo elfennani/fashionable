@@ -504,6 +504,8 @@ export type Database = {
           id: number
           index: number
           thumbnail_file_name: string | null
+          thumbnail_mobile_file_name: string | null
+          thumbnail_mobile_url: string | null
           thumbnail_url: string
           title: string
         }
@@ -514,6 +516,8 @@ export type Database = {
           id?: number
           index: number
           thumbnail_file_name?: string | null
+          thumbnail_mobile_file_name?: string | null
+          thumbnail_mobile_url?: string | null
           thumbnail_url: string
           title: string
         }
@@ -524,6 +528,8 @@ export type Database = {
           id?: number
           index?: number
           thumbnail_file_name?: string | null
+          thumbnail_mobile_file_name?: string | null
+          thumbnail_mobile_url?: string | null
           thumbnail_url?: string
           title?: string
         }
@@ -576,7 +582,6 @@ export type Database = {
       get_categories: {
         Args: never
         Returns: {
-          category_id: number | null
           created_at: string
           id: number
           image: string
@@ -588,7 +593,6 @@ export type Database = {
       get_categories_unarchived: {
         Args: never
         Returns: {
-          category_id: number | null
           created_at: string
           id: number
           image: string

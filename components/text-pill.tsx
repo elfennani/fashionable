@@ -9,7 +9,7 @@ const TextPill = ({ children, className }: TextPillProps) => {
   return (
     <p
       className={cn(
-        "font-semibold py-0.5 md:py-1 px-2 md:px-3 rounded-full uppercase text-white text-[0.625rem] md:text-xs",
+        "font-semibold py-0.5 px-2 rounded-full uppercase text-white text-[0.625rem]",
         className
       )}
     >

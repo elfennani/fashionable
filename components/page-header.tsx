@@ -20,18 +20,18 @@ const PageHeader = ({
   return (
     <div
       className={cn(
-        "px-4 blend sm:px-8 pt-16 sm:pt-32 pb-10 sm:pb-20 gap-16 sm:gap-32 flex items-center flex-col bg-zinc-100",
+        "px-4 blend sm:px-8 pt-10 pb-8 sm:pt-16 sm:pb-10 gap-8 sm:gap-16 flex items-center flex-col bg-zinc-100",
         !contentId && "py-16 sm:py-32"
       )}
     >
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-2 sm:gap-4">
         {iconClassname && (
-          <span className={cn("iconify size-10 mb-4", iconClassname)} />
+          <span className={cn("iconify size-5 sm:size-10 mb-4", iconClassname)} />
         )}
-        <h1 className="text-center font-display uppercase text-3xl md:text-4xl lg:text-5xl tracking-widest font-bold">
+        <h1 className="text-center font-display uppercase text-lg sm:text-2xl md:text-3xl lg:text-4xl tracking-widest font-bold">
           {title}
         </h1>
-        <p className="text-center md:text-lg uppercase font-light tracking-widest">
+        <p className="text-center max-sm:text-sm md:text-lg uppercase font-light tracking-widest">
           {subtitle}
         </p>
       </div>
@@ -45,7 +45,7 @@ const PageHeader = ({
               duration: 0.6,
               ease: "easeInOut",
             }}
-            className="iconify teenyicons--arrow-down-outline size-8 md:size-10"
+            className="iconify teenyicons--arrow-down-outline size-6 sm:size-8 md:size-10"
           />
         </Link>
       )}
