@@ -63,11 +63,11 @@ export default function NavHeader(props: Props) {
         <Link href="/" className="flex-1 block h-14 max-sm:h-10">
           <img src={props.logo} alt={props.title} className="h-full mx-auto" />
         </Link>
-        <div className="md:flex-1 flex gap-8 justify-end">
-          <Link href={"/boutique?focus"} className="max-md:hidden">
+        <div className="md:flex-1 flex gap-8 justify-end items-center">
+          <Link href={"/boutique?focus"} className="max-md:hidden block size-6">
             <span className="iconify teenyicons--search-outline size-6"></span>
           </Link>
-          <Link href="/wishlist" className="max-md:hidden">
+          <Link href="/wishlist" className="max-md:hidden block size-6">
             <span className="iconify teenyicons--heart-outline size-6 relative"></span>
           </Link>
           <Sheet>
