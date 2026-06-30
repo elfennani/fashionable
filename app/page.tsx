@@ -1,5 +1,5 @@
 import Banner from "@/components/banner";
-import CategoryCard from "@/components/category-card";
+import CategorySection from "@/components/category-section";
 import Container from "@/components/container";
 import LandingPageSection from "@/components/landing-page-sections";
 import SectionTitle from "@/components/section-title";
@@ -35,6 +35,39 @@ export default async function Home() {
   const testimonials = await supabase.from("testimonials").select();
   const prefs = await getPrefs();
 
+  const { data: allCategories } = await supabase
+    .from("category")
+    .select("*")
+    .order("name");
+
+  const subCategoriesWithLastProduct = await Promise.all(
+    (allCategories || [])
+      .filter((cat) => cat.category_id !== null)
+      .map(async (subCat) => {
+        const { data: lastProduct } = await supabase
+          .from("product")
+          .select("*, images(*)")
+          .eq("category_id", subCat.id)
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .single();
+
+        return {
+          ...subCat,
+          lastProductImage: lastProduct?.images?.[0]?.url || subCat.image,
+        };
+      })
+  );
+
+  const categoriesWithSubcategories = (allCategories || [])
+    .filter((cat) => cat.category_id === null)
+    .map((cat) => ({
+      ...cat,
+      subCategories: subCategoriesWithLastProduct.filter(
+        (sub) => sub.category_id === cat.id
+      ),
+    }));
+
   if (categories.error) throw categories.error;
   if (popularProducts.error) throw popularProducts.error;
   if (newProducts.error) throw newProducts.error;
@@ -50,18 +83,9 @@ export default async function Home() {
       />
       <Container className="py-8 max-md:px-8 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nos Catégories</SectionTitle>
-        <div className="flex flex-wrap gap-8 md:gap-16 md:items-center md:justify-center flex-col md:flex-row">
-          {categories.data
-            .filter((category) => !category.category_id)
-            .map((category) => (
-              <CategoryCard
-                key={category.id}
-                title={category.name}
-                image={category.image}
-                href={`/boutique?category=${category.id}`}
-              />
-            ))}
-        </div>
+        <CategorySection
+          categories={categoriesWithSubcategories as any}
+        />
       </Container>
       {prefs["landing-page-sections"].map((section) => (
         <LandingPageSection key={section.id} section={section} />
