@@ -112,7 +112,7 @@ export default function Banner({ banners, collections }: Props) {
 
   return (
     <div>
-      <div className="w-screen max-h-[70svh] aspect-[3/2] xl:aspect-[21/9] relative overflow-hidden">
+      <div className="w-screen max-h-[70svh] aspect-[3/4] md:aspect-[3/2] xl:aspect-[21/9] relative overflow-hidden">
         <AnimatePresence initial={false} custom={direction}>
           <picture>
             <source
