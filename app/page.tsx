@@ -84,7 +84,7 @@ export default async function Home() {
       <Container className="py-8 max-md:px-8 md:py-12 flex flex-col gap-8 md:gap-16">
         <SectionTitle className="w-full">Nos Catégories</SectionTitle>
         <CategorySection
-          categories={categoriesWithSubcategories as any}
+          categories={categoriesWithSubcategories as never}
         />
       </Container>
       {prefs["landing-page-sections"].map((section) => (
